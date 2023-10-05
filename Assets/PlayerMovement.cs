@@ -13,40 +13,61 @@ public class PlayerMovement : MonoBehaviour
     bool jumping;
     bool jumpCancelled;
     public LayerMask jumpableGround;
+
+    private bool isMovementEnabled = true;
+    private float movementCooldown = 1f;
+    private float movementCooldownTimer = 0f;
+
+    public static PlayerMovement instance;
+
     public void Start(){
         coll = GetComponent<BoxCollider2D>();
+        instance = this;
     }
+
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W) && isGrounded())
+        if (isMovementEnabled)
         {
-            float jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * rb.gravityScale));
-            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-            jumping = true;
-            jumpCancelled = false;
-            jumpTime = 0;
-        }
-        if (jumping)
-        {
-            jumpTime += Time.deltaTime;
-            if (Input.GetKeyUp(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.W) && isGrounded())
             {
-                jumpCancelled = true;
+                float jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * rb.gravityScale));
+                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                jumping = true;
+                jumpCancelled = false;
+                jumpTime = 0;
             }
-            if (jumpTime > buttonTime)
+            if (jumping)
             {
-                jumping = false;
+                jumpTime += Time.deltaTime;
+                if (Input.GetKeyUp(KeyCode.W))
+                {
+                    jumpCancelled = true;
+                }
+                if (jumpTime > buttonTime)
+                {
+                    jumping = false;
+                }
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                rb.velocity = new Vector2(moveSpeed,rb.velocity.y);
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                rb.velocity = new Vector2(-moveSpeed,rb.velocity.y);
             }
         }
-        if (Input.GetKey(KeyCode.D))
+        else
         {
-            rb.velocity = new Vector2(moveSpeed,rb.velocity.y);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            rb.velocity = new Vector2(-moveSpeed,rb.velocity.y);
+            movementCooldownTimer -= Time.deltaTime;
+            if (movementCooldownTimer <= 0f)
+            {
+                isMovementEnabled = true;
+            }
         }
     }
+
     public void FixedUpdate()
     {
         if(jumpCancelled && jumping && rb.velocity.y > 0)
@@ -54,8 +75,15 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(Vector2.down * cancelRate);
         }
     }
+
     public bool isGrounded(){
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
+    }
+
+    public void DisableMovementForCooldown()
+    {
+        isMovementEnabled = false;
+        movementCooldownTimer = movementCooldown;
     }
 }
 
