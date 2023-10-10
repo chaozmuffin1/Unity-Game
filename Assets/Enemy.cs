@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float minDistance = 10f; 
     [SerializeField] private float knockbackForce = 1000f;
     [SerializeField] private float knockbackCooldown = 1f;
-    private Player playerScript;
+    public Player playerScript;
     private int damageAmount = 20;
 
     private bool isKnockbackCooldown = false;
@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour
             knockbackCooldownTimer = knockbackCooldown;
 
             //Disable player's movement for a second
-            PlayerMovement.instance.DisableMovementForCooldown();
+            PlayerMovement1.instance.DisableMovementForCooldown();
 
             playerScript.TakeDamage(damageAmount);
         }

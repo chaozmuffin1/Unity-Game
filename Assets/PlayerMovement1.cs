@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement1 : MonoBehaviour
 {
     public Rigidbody2D rb;
     public BoxCollider2D coll;
@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private float movementCooldown = 1f;
     private float movementCooldownTimer = 0f;
 
-    public static PlayerMovement instance;
+    public static PlayerMovement1 instance;
 
     public void Start(){
         coll = GetComponent<BoxCollider2D>();

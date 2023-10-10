@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 619277997}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -968,6 +968,7 @@ MonoBehaviour:
   minDistance: 8
   knockbackForce: 500
   knockbackCooldown: 1
+  playerScript: {fileID: 0}
 --- !u!1 &1758283104
 GameObject:
   m_ObjectHideFlags: 0
