@@ -83,10 +83,17 @@ public class PlayerMovement : MonoBehaviour{
             runRight = false;
         }
         }
-        if(isGrounded() == false){
+        if(isGrounded() == false && rb.velocity.y>0){
             anim.SetBool("jumping", true);
         }else{
-            anim.SetBool("jumping", false);
+            if(isGrounded() == false && rb.velocity.y<=0){
+                anim.SetBool("jumping", false);
+                anim.SetBool("falling", true);
+            }else{
+                anim.SetBool("jumping", false);
+                anim.SetBool("falling", false);
+            }
+            
         }
         if (runRight == false && runLeft == false){
             anim.SetBool("running",false);
