@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour
             //Disable player's movement for a second
             PlayerMovement.instance.DisableMovementForCooldown();
 
-            //playerScript.TakeDamage(damageAmount);
+            playerScript.TakeDamage(damageAmount);
         }
 
     }
