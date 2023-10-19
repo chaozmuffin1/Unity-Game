@@ -9,15 +9,22 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float minDistance = 10f; 
     [SerializeField] private float knockbackForce = 500f;
     [SerializeField] private float knockbackCooldown = 1f;
+    public FloatingHealthBar healthBar;
     public Player playerScript;
+    public Enemy enemyScript;
     private int damageAmount = 20;
+    private int currentHealth;
+    private int maxHealth = 20;
 
     private bool isKnockbackCooldown = false;
     private float knockbackCooldownTimer = 0f;
     // Start is called before the first frame update
     void Start()
     {
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        enemyScript = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
     }
 
     // Update is called once per frame
@@ -57,7 +64,25 @@ public class Enemy : MonoBehaviour
             PlayerMovement.instance.DisableMovementForCooldown();
 
             playerScript.TakeDamage(damageAmount);
+            enemyScript.TakeDamage(5);
         }
 
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+        healthBar.SetHealth(currentHealth);
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 }
