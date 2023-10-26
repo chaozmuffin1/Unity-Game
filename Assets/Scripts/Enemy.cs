@@ -64,10 +64,31 @@ public class Enemy : MonoBehaviour
             PlayerMovement.instance.DisableMovementForCooldown();
 
             playerScript.TakeDamage(damageAmount);
-            enemyScript.TakeDamage(5);
         }
 
     }
+
+    /*public void TakeKnockback()
+    {
+        Vector2 knockbackDirection = (transform.position - player.transform.position).normalized;
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.velocity = knockbackDirection * (knockbackForce / rb.mass);
+
+        // Stop the enemy from moving for a second
+        StartCoroutine(DisableMovementForCooldown());
+    }*/
+
+    public IEnumerator DisableMovementForCooldown()
+    {
+        // Stop the enemy's rigidbody from moving
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.zero;
+
+        yield return new WaitForSeconds(1.0f); // Adjust the duration as needed
+
+        // Resume normal movement (if required)
+    }
+
 
     public void TakeDamage(int damage)
     {
@@ -81,7 +102,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Die()
+    public void Die()
     {
         Destroy(gameObject);
     }

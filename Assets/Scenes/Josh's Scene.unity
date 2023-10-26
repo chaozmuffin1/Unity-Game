@@ -210,7 +210,8 @@ GameObject:
   - component: {fileID: 137801921}
   - component: {fileID: 137801922}
   - component: {fileID: 137801923}
-  m_Layer: 5
+  - component: {fileID: 137801924}
+  m_Layer: 8
   m_Name: Heatlh Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -303,7 +304,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 137801922}
-  canvasGroup: {fileID: 0}
+  canvasGroup: {fileID: 137801924}
+--- !u!225 &137801924
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137801920}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &260792104
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,7 +511,7 @@ GameObject:
   - component: {fileID: 466168815}
   - component: {fileID: 466168814}
   - component: {fileID: 466168813}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -638,7 +651,7 @@ Transform:
   m_Children:
   - {fileID: 1201041802}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -694,7 +707,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -874,7 +887,7 @@ MonoBehaviour:
   m_Follow: {fileID: 619277992}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 5
+    OrthographicSize: 7.5
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -921,6 +934,7 @@ GameObject:
   - component: {fileID: 619277995}
   - component: {fileID: 619277997}
   - component: {fileID: 619277998}
+  - component: {fileID: 619277999}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1012,13 +1026,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 619277989}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -10.58, y: -1.34, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1338722009}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &619277994
 Rigidbody2D:
@@ -1101,6 +1116,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 331723608}
   playerSpriteRenderer: {fileID: 0}
+--- !u!114 &619277999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619277989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76b6b64bc427c994e9a718d7ff9abf6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 619277997}
+  attackPoint: {fileID: 1338722009}
+  attackRange: 1
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  knockbackForce: 50
 --- !u!1 &1069306144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1146,7 +1180,7 @@ Transform:
   - {fileID: 1929256109}
   - {fileID: 2004378827}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1127994519
 GameObject:
@@ -2608,7 +2642,7 @@ CompositeCollider2D:
   m_GameObject: {fileID: 1127994519}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 1a419d518c52a474bb8531a8b11e5c14, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -2769,7 +2803,7 @@ RectTransform:
   m_Children:
   - {fileID: 331723607}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2785,7 +2819,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1175923356}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2825,7 +2859,7 @@ GameObject:
   - component: {fileID: 1201041805}
   - component: {fileID: 1201041804}
   - component: {fileID: 1201041803}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3003,6 +3037,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1338722008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1338722009}
+  m_Layer: 0
+  m_Name: AtttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1338722009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338722008}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.11, y: -0.382, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 619277992}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1382136065
 GameObject:
   m_ObjectHideFlags: 0
@@ -3068,7 +3133,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1779744624
 GameObject:
@@ -3081,7 +3146,7 @@ GameObject:
   - component: {fileID: 1779744625}
   - component: {fileID: 1779744627}
   - component: {fileID: 1779744626}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10381,7 +10446,7 @@ GameObject:
   - component: {fileID: 1950420688}
   - component: {fileID: 1950420690}
   - component: {fileID: 1950420689}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
