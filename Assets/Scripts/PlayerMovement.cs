@@ -25,6 +25,8 @@ public class PlayerMovement : MonoBehaviour{
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         instance = this;
+
+        anim.SetBool("attack",false);
     }
     public void Update(){
         if (isMovementEnabled){
