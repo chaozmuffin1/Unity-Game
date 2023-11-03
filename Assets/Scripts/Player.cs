@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class Player : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class Player : MonoBehaviour
     private int currentHealth;
     public HealthBar healthBar;
     public SpriteRenderer playerSpriteRenderer; // Reference to the SpriteRenderer Component
+
+    
+    /*[SerializeField] private bool active = true;
+    private bool hasDied = false;*/
 
     // Start is called before the first frame update
     void Start()
@@ -19,9 +24,13 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.Space))
+        /*if (currentHealth <= 0)
         {
-            TakeDamage(20);
+            Die();
+        }
+        if (!active)
+        {
+            return;
         }*/
     }
 
@@ -31,4 +40,20 @@ public class Player : MonoBehaviour
 
         healthBar.SetHealth(currentHealth);
     }
+
+    /*public void Die()
+    {
+        if (hasDied)
+        {
+            return;
+        }
+        hasDied = true;
+
+        active = false;
+        transform.Rotate(0,0, -90);
+
+        PlayerMovement.instance.DisableMovementForCooldown();
+    }*/
+
+    
 }
