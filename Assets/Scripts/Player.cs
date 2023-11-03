@@ -6,9 +6,13 @@ using Cinemachine;
 public class Player : MonoBehaviour
 {
     private int maxHealth = 100;
-    private int currentHealth;
+    public int currentHealth;
     public HealthBar healthBar;
     public SpriteRenderer playerSpriteRenderer; // Reference to the SpriteRenderer Component
+    [SerializeField] private GameObject deathScreen = null;
+    [SerializeField] private GameObject healthCanvas = null;
+    [SerializeField] private GameObject player = null;
+    [SerializeField] private GameObject enemy = null;
 
     
     /*[SerializeField] private bool active = true;
@@ -17,6 +21,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        deathScreen.SetActive(false);
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
@@ -32,7 +37,15 @@ public class Player : MonoBehaviour
         {
             return;
         }*/
+       
+        if (currentHealth <= 0){
+            deathScreen.SetActive(true);
+            healthCanvas.SetActive(false);
+            player.SetActive(false);
+            enemy.SetActive(false);
+        }
     }
+
 
     public void TakeDamage(int damage)
     {
