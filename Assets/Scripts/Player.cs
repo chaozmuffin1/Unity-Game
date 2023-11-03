@@ -5,13 +5,15 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private int maxHealth = 100;
-    private int currentHealth;
+    public int currentHealth;
     public HealthBar healthBar;
     public SpriteRenderer playerSpriteRenderer; // Reference to the SpriteRenderer Component
+    [SerializeField] private GameObject deathScreen = null;
 
     // Start is called before the first frame update
     void Start()
     {
+        deathScreen.SetActive(false);
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
@@ -23,7 +25,12 @@ public class Player : MonoBehaviour
         {
             TakeDamage(20);
         }*/
+       
+        if (currentHealth <= 0){
+            deathScreen.SetActive(true);
+        }
     }
+
 
     public void TakeDamage(int damage)
     {

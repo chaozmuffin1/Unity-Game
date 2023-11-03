@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour{
     public Rigidbody2D rb;
     public BoxCollider2D coll;
@@ -20,28 +21,39 @@ public class PlayerMovement : MonoBehaviour{
     private float movementCooldown = 1f;
     private float movementCooldownTimer = 0f;
     public static PlayerMovement instance;
+    private PlayerControls playerControls;
+
+    public void Awake(){
+        playerControls = new PlayerControls();
+    }
+    public void OnEnable(){
+        playerControls.Enable();
+    }
+    public void OnDisable(){
+        playerControls.Disable();
+    }
     public void Start(){
         coll = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         instance = this;
-
         anim.SetBool("attack",false);
     }
     public void Update(){
         if (isMovementEnabled){
 
         
-        if(Input.GetKeyDown(KeyCode.W) && isGrounded()){
+        if(/*Input.GetKeyDown(KeyCode.W)*/ playerControls.Land.Jump.triggered && isGrounded()){
             float jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * rb.gravityScale));
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             jumping = true;
             jumpCancelled = false;
             jumpTime = 0;
         }
+        bool isJumpHeld = playerControls.Land.Jump.ReadValue<float>() > 0.1f;
         if (jumping){
             jumpTime += Time.deltaTime;
-            if (Input.GetKeyUp(KeyCode.W))
+            if (isJumpHeld == false /*Input.GetKeyUp(KeyCode.W)*/)
             {
                 jumpCancelled = true;
             }
@@ -50,10 +62,10 @@ public class PlayerMovement : MonoBehaviour{
                 jumping = false;
             }
         }
-        if (Input.GetKey(KeyCode.D)){
+        if (/*Input.GetKey(KeyCode.D)*/playerControls.Land.Right.IsPressed()){
             rb.velocity = new Vector2(moveSpeed,rb.velocity.y);
         }
-        if (Input.GetKey(KeyCode.A)){
+        if (/*Input.GetKey(KeyCode.A)*/playerControls.Land.Left.IsPressed()){
             rb.velocity = new Vector2(-moveSpeed,rb.velocity.y);
         }
         }else{
