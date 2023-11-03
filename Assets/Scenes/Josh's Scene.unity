@@ -1031,7 +1031,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1d3569518c70f4dba4d2ac8fff8cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
   rb: {fileID: 619277994}
   coll: {fileID: 619277995}
   buttonTime: 0.5
@@ -1192,9 +1191,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3670d3024b531904ca31c33135d95b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHealth: 0
   healthBar: {fileID: 331723608}
   playerSpriteRenderer: {fileID: 0}
   deathScreen: {fileID: 779678322}
+  healthCanvas: {fileID: 1168850736}
+  player: {fileID: 619277989}
+  enemy: {fileID: 466168812}
 --- !u!114 &619277999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1287,6 +1290,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ae3acfb5-a642-448d-a9ec-6a68de50e682
     m_ActionName: Land/Right[/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6d7c7d98-c940-4d95-92bb-79466cd9b596
+    m_ActionName: Dead/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Land
@@ -1361,7 +1368,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &779678323
 MonoBehaviour:
   m_ObjectHideFlags: 0

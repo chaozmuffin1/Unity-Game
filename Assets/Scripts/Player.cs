@@ -9,6 +9,9 @@ public class Player : MonoBehaviour
     public HealthBar healthBar;
     public SpriteRenderer playerSpriteRenderer; // Reference to the SpriteRenderer Component
     [SerializeField] private GameObject deathScreen = null;
+    [SerializeField] private GameObject healthCanvas = null;
+    [SerializeField] private GameObject player = null;
+    [SerializeField] private GameObject enemy = null;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +31,9 @@ public class Player : MonoBehaviour
        
         if (currentHealth <= 0){
             deathScreen.SetActive(true);
+            healthCanvas.SetActive(false);
+            player.SetActive(false);
+            enemy.SetActive(false);
         }
     }
 
