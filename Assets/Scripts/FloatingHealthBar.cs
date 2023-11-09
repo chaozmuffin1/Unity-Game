@@ -11,6 +11,7 @@ public class FloatingHealthBar : MonoBehaviour
     private Coroutine fadeOutCoroutine; // Coroutine reference
 
     private float lastHealth;
+    // [SerializeField] private GameObject gameObject;
 
     // Start with the health bar faded out :
     private void Awake()

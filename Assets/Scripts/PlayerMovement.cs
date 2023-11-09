@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour{
     private float movementCooldownTimer = 0f;
     public static PlayerMovement instance;
     private PlayerControls playerControls;
+    [SerializeField] private PhysicsMaterial2D material;
+    [SerializeField] private PhysicsMaterial2D defaultMaterial;
 
     public void Awake(){
         playerControls = new PlayerControls();
@@ -41,7 +43,24 @@ public class PlayerMovement : MonoBehaviour{
     }
     public void Update(){
         if (isMovementEnabled){
+        
+        //layermask component for the boxcast so it only detects collisions with ground
+        LayerMask mask = LayerMask.GetMask("Ground");
 
+        //A boxcast of the sprite's collider to the right that detects if the player is touching a vertical wall
+        //this boxcasts also unintentionally detects if the player is touching ground from below it, but this is not an issue at the moment
+        RaycastHit2D hit = Physics2D.BoxCast(transform.position, coll.bounds.size, 0f, Vector3.right, 0.1f, mask);
+
+        //if hit is true, meaning a collision between the casted box and the wall is detected, the material of the player's rigid body is changed to have zero friction
+        //this is to prevent the player to be able to stick to walls by moving to the right while touching a wall
+        //existing friction between the player and the ground is responsible for making the player stick to a wall
+        if (hit){
+            rb.sharedMaterial = material;
+        }
+        else{
+        //if a collision is not detected the player is on the ground or in the air and the player will have friction
+            rb.sharedMaterial = defaultMaterial;
+        }
         
         if(/*Input.GetKeyDown(KeyCode.W)*/ playerControls.Land.Jump.triggered && isGrounded()){
             float jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * rb.gravityScale));
