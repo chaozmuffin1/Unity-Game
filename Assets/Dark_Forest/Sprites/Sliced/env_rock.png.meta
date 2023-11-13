@@ -2229,7 +2229,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -2258,9 +2258,69 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 1
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -17552,7 +17612,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      env_rock_305: 21300610
+      env_rock_226: 21300452
       env_rock_76: 21300152
       env_rock_581: 21301162
       env_rock_423: 21300846
@@ -17791,8 +17851,8 @@ TextureImporter:
       env_rock_565: 21301130
       env_rock_381: 21300762
       env_rock_73: 21300146
-      env_rock_356: 21300712
       env_rock_438: 21300876
+      env_rock_356: 21300712
       env_rock_77: 21300154
       env_rock_128: 21300256
       env_rock_562: 21301124
@@ -17907,11 +17967,11 @@ TextureImporter:
       env_rock_457: 21300914
       env_rock_173: 21300346
       env_rock_630: 21301260
-      env_rock_201: 21300402
-      env_rock_449: 21300898
-      env_rock_366: 21300732
       env_rock_514: 21301028
+      env_rock_449: 21300898
       env_rock_348: 21300696
+      env_rock_366: 21300732
+      env_rock_201: 21300402
       env_rock_78: 21300156
       env_rock_259: 21300518
       env_rock_245: 21300490
@@ -18278,7 +18338,7 @@ TextureImporter:
       env_rock_601: 21301202
       env_rock_285: 21300570
       env_rock_147: 21300294
-      env_rock_226: 21300452
+      env_rock_305: 21300610
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 
