@@ -760,7 +760,7 @@ GameObject:
   m_Component:
   - component: {fileID: 548291688}
   m_Layer: 0
-  m_Name: background
+  m_Name: 1 Bit Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10598,7 +10598,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!156049354 &1048967283
 Grid:
   m_ObjectHideFlags: 0
