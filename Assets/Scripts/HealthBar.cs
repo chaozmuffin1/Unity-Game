@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//script to make a health bar game object type
 public class HealthBar : MonoBehaviour
 {
 	public Slider slider;

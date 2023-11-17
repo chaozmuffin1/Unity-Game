@@ -3,42 +3,68 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour{
+    //variable that is later set to sprite's rigid body
     public Rigidbody2D rb;
+    //variable that is later set to the sprite's collider
     public BoxCollider2D coll;
+    //the maximum amount of time that will be read as a jump input
     public float buttonTime = 0.5f;
+    //the vertical distance the player is able to jump
     public float jumpHeight = 5;
+    //adds initial downwards force after a jump is cancelled
     public float cancelRate = 100;
+    //the player's movement speed
     public float moveSpeed=8;
+    //is set to the amount of time that the player holds on to the jump key, for variable jumping
     float jumpTime;
+    //is true when the player hits the jump key and is currently grounded
     bool jumping;
+    //set to true when player releases the jump key and false otherwise
     bool jumpCancelled;
+    //A layer mask so a later raycast will only detect collisions with the layer 'jumpable ground'
     public LayerMask jumpableGround;
+    //animator component that is later set to the sprite's animator
     public Animator anim;
     public SpriteRenderer sprite;
+    //checks if the player is running to the right
     public bool runRight;
+    //checks if the player is running to the left
     public bool runLeft;
+    //checks if player can move or if the player is on knockback cooldown
     private bool isMovementEnabled = true;
+    //amount of seconds player is on cooldown for
     private float movementCooldown = 1f;
+    //timer that will count until it equals the movement cooldown
     private float movementCooldownTimer = 0f;
-    public static PlayerMovement instance;
+    //reference to the player's input component
     private PlayerControls playerControls;
+    //physics material that has no friction
     [SerializeField] private PhysicsMaterial2D material;
+    //physics material that has friction
     [SerializeField] private PhysicsMaterial2D defaultMaterial;
+
+    public static PlayerMovement instance;
 
     public void Awake(){
         playerControls = new PlayerControls();
     }
+    //enables the player inputs
     public void OnEnable(){
         playerControls.Enable();
     }
+    //disables the player inputs
     public void OnDisable(){
         playerControls.Disable();
     }
     public void Start(){
+        //gets the player's box collider
         coll = GetComponent<BoxCollider2D>();
+        //gets the player's animation component
         anim = GetComponent<Animator>();
+        //gets the player's sprite renderer
         sprite = GetComponent<SpriteRenderer>();
         instance = this;
+        //sets attack to false on the first frame
         anim.SetBool("attack",false);
     }
     public void Update(){
@@ -62,7 +88,7 @@ public class PlayerMovement : MonoBehaviour{
             rb.sharedMaterial = defaultMaterial;
         }
         
-        if(/*Input.GetKeyDown(KeyCode.W)*/ playerControls.Land.Jump.triggered && isGrounded()){
+        if(playerControls.Land.Jump.triggered && isGrounded()){
             float jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * rb.gravityScale));
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             jumping = true;
@@ -72,7 +98,7 @@ public class PlayerMovement : MonoBehaviour{
         bool isJumpHeld = playerControls.Land.Jump.ReadValue<float>() > 0.1f;
         if (jumping){
             jumpTime += Time.deltaTime;
-            if (isJumpHeld == false /*Input.GetKeyUp(KeyCode.W)*/)
+            if (isJumpHeld == false)
             {
                 jumpCancelled = true;
             }
@@ -81,10 +107,10 @@ public class PlayerMovement : MonoBehaviour{
                 jumping = false;
             }
         }
-        if (/*Input.GetKey(KeyCode.D)*/playerControls.Land.Right.IsPressed()){
+        if (playerControls.Land.Right.IsPressed()){
             rb.velocity = new Vector2(moveSpeed,rb.velocity.y);
         }
-        if (/*Input.GetKey(KeyCode.A)*/playerControls.Land.Left.IsPressed()){
+        if (playerControls.Land.Left.IsPressed()){
             rb.velocity = new Vector2(-moveSpeed,rb.velocity.y);
         }
         }else{
