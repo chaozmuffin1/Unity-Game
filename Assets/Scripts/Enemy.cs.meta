@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/MainMenu.cs.meta
+guid: ea66662696d2b6b4496e6ea79c23f651
+========
+guid: 0390b414ee9d66c47a9b83026a310a85
+>>>>>>>> 4eebb40b27ae82a290ca5daf73e58d194443bbda:Assets/Enemy.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
