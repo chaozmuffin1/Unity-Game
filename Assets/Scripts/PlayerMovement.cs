@@ -14,7 +14,11 @@ public class PlayerMovement : MonoBehaviour{
     //adds initial downwards force after a jump is cancelled
     public float cancelRate = 100;
     //the player's movement speed
-    public float moveSpeed=8;
+    public float moveSpeed = 8;
+    public DashToPoint dashScript;
+    public bool dashReady = false;
+    public float dashCooldown = 10f;
+    public float currentDashCooldown = 0f;
     //is set to the amount of time that the player holds on to the jump key, for variable jumping
     float jumpTime;
     //is true when the player hits the jump key and is currently grounded
@@ -66,8 +70,21 @@ public class PlayerMovement : MonoBehaviour{
         instance = this;
         //sets attack to false on the first frame
         anim.SetBool("attack",false);
+        dashScript = GameObject.FindGameObjectWithTag("Player").GetComponent<DashToPoint>();
     }
     public void Update(){
+        if (currentDashCooldown >= dashCooldown){
+            dashReady = true;
+        }else{
+            dashReady = false;
+            currentDashCooldown += Time.deltaTime;
+            currentDashCooldown = Mathf.Clamp(currentDashCooldown, 0.0f, dashCooldown);
+        }
+        if (isGrounded() == false && dashReady == true){
+            dashScript.TurnOn();
+        }else{
+            dashScript.TurnOff();
+        }
         if (isMovementEnabled){
         
         //layermask component for the boxcast so it only detects collisions with ground
@@ -89,6 +106,7 @@ public class PlayerMovement : MonoBehaviour{
         }
         
         if(playerControls.Land.Jump.triggered && isGrounded()){
+            rb.gravityScale = 2;
             float jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * rb.gravityScale));
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             jumping = true;

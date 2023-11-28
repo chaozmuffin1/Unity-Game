@@ -1665,6 +1665,7 @@ GameObject:
   - component: {fileID: 619277998}
   - component: {fileID: 619277999}
   - component: {fileID: 619278000}
+  - component: {fileID: 619278001}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -1690,6 +1691,10 @@ MonoBehaviour:
   jumpHeight: 5
   cancelRate: 100
   moveSpeed: 8
+  dashScript: {fileID: 0}
+  dashReady: 0
+  dashCooldown: 2
+  currentDashCooldown: 0
   jumpableGround:
     serializedVersion: 2
     m_Bits: 64
@@ -1740,8 +1745,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -6367560908665664636, guid: cd947491a13509945aa1b644f9db3ef2, type: 3}
-  m_Color: {r: 0, g: 0.990566, b: 0.7941896, a: 1}
+  m_Sprite: {fileID: 584105503, guid: f8b128d3bd8f0db43b1ccf7843610c4e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1802,18 +1807,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.017767906, y: -0.19209129}
+  m_Offset: {x: -0.038521767, y: -0.015181065}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
+    oldSize: {x: 3.368421, y: 3.368421}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2276268, y: 1.3841826}
+  m_Size: {x: 1.3723717, y: 2.1883204}
   m_EdgeRadius: 0
 --- !u!95 &619277997
 Animator:
@@ -1959,6 +1964,22 @@ MonoBehaviour:
   m_DefaultActionMap: Land
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &619278001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619277989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf178bcb5a5fd9b47947bb1550c6787f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 619277994}
+  dashSpeed: 14
+  moving: 0
+  closeToPos: 0
 --- !u!1 &675027989
 GameObject:
   m_ObjectHideFlags: 0
