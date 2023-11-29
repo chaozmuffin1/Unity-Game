@@ -16,7 +16,7 @@ public class DashToPoint : MonoBehaviour
         TurnOff();
     }
     void Update()
-    {
+    { 
         if (Input.GetMouseButtonDown(0)){
             lastClickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             moving = true;

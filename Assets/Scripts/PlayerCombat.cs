@@ -5,10 +5,13 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     public Animator animator;
-    public Transform attackPoint;
+    public Transform attackPointRight;
+    public Transform attackPointLeft;
     public float attackRange = 1f;
     public LayerMask enemyLayers;
     public float knockbackForce = 15f;
+    public Rigidbody2D rb;
+    public bool runRight = true;
 
     //checks if this is the player's first attack since starting the game
     public bool firstAttack = true;
@@ -18,12 +21,18 @@ public class PlayerCombat : MonoBehaviour
     public float cooldown = 1.5f;
     //the time that has passed since the player last attacked
     public float cooldownCurrent = 0.0f;
-    
-    
 
+    void Start(){
+        rb = GetComponent<Rigidbody2D>();
+    }
     // Update is called once per frame
     void Update()
     {
+        if (rb.velocity.x > 0){
+            runRight = true;
+        }else{
+            runRight = false;
+        }
         if (cooldownCurrent >= cooldown){
             //if the time since the last attack is greater than the cooldown the player can attack
             //will not update cooldownCurrent 
@@ -49,16 +58,21 @@ public class PlayerCombat : MonoBehaviour
             //sets firstAttack to false so this function isn't called again
             firstAttack = false;
         }
-        
     }
 
     void Attack()
     {
+        Collider2D[] hitEnemies;
         // Play an attack animation
         animator.SetTrigger("attack");
 
         // Detect enemies in range of attack
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        if (runRight == true){
+            hitEnemies = Physics2D.OverlapCircleAll(attackPointRight.position, attackRange, enemyLayers);
+        }else{
+            hitEnemies = Physics2D.OverlapCircleAll(attackPointLeft.position, attackRange, enemyLayers);
+        }
+        //Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointRight.position, attackRange, enemyLayers);
 
         // continue video at 7:32
         // Damage enemies in range of attack
@@ -81,12 +95,12 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    void OnDrawGizmosSelected()
+    /*void OnDrawGizmosSelected()
     {
         if (attackPoint == null)
         {
             return;
         }
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-    }
+    }*/
 }

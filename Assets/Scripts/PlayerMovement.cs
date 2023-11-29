@@ -73,17 +73,18 @@ public class PlayerMovement : MonoBehaviour{
         dashScript = GameObject.FindGameObjectWithTag("Player").GetComponent<DashToPoint>();
     }
     public void Update(){
+        
+        if (isGrounded() == false && dashReady == true){
+            dashScript.TurnOn();
+        }else{
+            dashScript.TurnOff();
+        }
         if (currentDashCooldown >= dashCooldown){
             dashReady = true;
         }else{
             dashReady = false;
             currentDashCooldown += Time.deltaTime;
             currentDashCooldown = Mathf.Clamp(currentDashCooldown, 0.0f, dashCooldown);
-        }
-        if (isGrounded() == false && dashReady == true){
-            dashScript.TurnOn();
-        }else{
-            dashScript.TurnOff();
         }
         if (isMovementEnabled){
         
