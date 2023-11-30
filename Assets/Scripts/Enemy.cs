@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private GameObject player;
+
     [SerializeField] private float speed = 3f;
     [SerializeField] private float minDistance = 10f; 
     [SerializeField] private float knockbackForce = 500f;
@@ -18,9 +19,12 @@ public class Enemy : MonoBehaviour
 
     private bool isKnockbackCooldown = false;
     private float knockbackCooldownTimer = 0f;
+
+    public Animator anim;
     // Start is called before the first frame update
     void Start()
     {
+        anim = player.GetComponent<Animator>();
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
@@ -56,6 +60,7 @@ public class Enemy : MonoBehaviour
             Vector2 knockbackDirection = (player.transform.position - transform.position).normalized; // Calculate direction from enemy to player
             Rigidbody2D playerRigidbody = player.GetComponent<Rigidbody2D>(); // Apply force to player
             playerRigidbody.AddForce(knockbackDirection * knockbackForce); // Apply force to player
+            anim.SetTrigger("hit"); // Play hit animation
 
             isKnockbackCooldown = true;
             knockbackCooldownTimer = knockbackCooldown;
