@@ -1768,8 +1768,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1338722009}
   - {fileID: 1168850740}
+  - {fileID: 1338722009}
   - {fileID: 904093936}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -1984,6 +1984,7 @@ MonoBehaviour:
   dashSpeed: 14
   moving: 0
   closeToPos: 0
+  cooldown: 0
 --- !u!1 &675027989
 GameObject:
   m_ObjectHideFlags: 0

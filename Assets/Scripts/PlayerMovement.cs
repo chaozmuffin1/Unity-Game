@@ -73,7 +73,6 @@ public class PlayerMovement : MonoBehaviour{
         dashScript = GameObject.FindGameObjectWithTag("Player").GetComponent<DashToPoint>();
     }
     public void Update(){
-        
         if (isGrounded() == false && dashReady == true){
             dashScript.TurnOn();
         }else{
@@ -93,12 +92,13 @@ public class PlayerMovement : MonoBehaviour{
 
         //A boxcast of the sprite's collider to the right that detects if the player is touching a vertical wall
         //this boxcasts also unintentionally detects if the player is touching ground from below it, but this is not an issue at the moment
-        RaycastHit2D hit = Physics2D.BoxCast(transform.position, coll.bounds.size, 0f, Vector3.right, 0.1f, mask);
+        RaycastHit2D hitToRight = Physics2D.BoxCast(transform.position, coll.bounds.size, 0f, Vector3.right, 0.1f, mask);
+        RaycastHit2D hitToLeft = Physics2D.BoxCast(transform.position, coll.bounds.size, 0f, Vector3.left, 0.1f, mask);
 
         //if hit is true, meaning a collision between the casted box and the wall is detected, the material of the player's rigid body is changed to have zero friction
         //this is to prevent the player to be able to stick to walls by moving to the right while touching a wall
         //existing friction between the player and the ground is responsible for making the player stick to a wall
-        if (hit){
+        if (hitToRight || hitToLeft){
             rb.sharedMaterial = material;
         }
         else{

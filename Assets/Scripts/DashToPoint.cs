@@ -10,16 +10,19 @@ public class DashToPoint : MonoBehaviour
     Vector2 lastClickedPos;
     public bool moving;
     public bool closeToPos;
+    public float cooldown = 0.0f;
     
 
     public void Start(){
         TurnOff();
     }
     void Update()
-    { 
-        if (Input.GetMouseButtonDown(0)){
+    {
+        cooldown += Time.deltaTime;
+        if (Input.GetMouseButtonDown(0) && cooldown >=1f){
             lastClickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             moving = true;
+            cooldown = 0.0f;
         }
         if (moving && ((Vector2)transform.position - lastClickedPos).magnitude >= 2){
             GetComponent<PlayerMovement>().currentDashCooldown = 0;
