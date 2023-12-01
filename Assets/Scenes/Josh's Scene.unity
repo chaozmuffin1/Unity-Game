@@ -922,13 +922,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 619277989}
+  hitMaterial: {fileID: 6200000, guid: 1a419d518c52a474bb8531a8b11e5c14, type: 2}
+  defaultMaterial: {fileID: 6200000, guid: 30eebd381b57f7a43a246e6960569d72, type: 2}
   speed: 5
   minDistance: 8
   knockbackForce: 500
   knockbackCooldown: 1
   healthBar: {fileID: 137801923}
   playerScript: {fileID: 0}
+  playerMovementScript: {fileID: 0}
   enemyScript: {fileID: 0}
+  rb: {fileID: 0}
   anim: {fileID: 619277997}
 --- !u!61 &466168814
 BoxCollider2D:

@@ -5,6 +5,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private GameObject player;
+    [SerializeField] private PhysicsMaterial2D hitMaterial;
+    [SerializeField] private PhysicsMaterial2D defaultMaterial;
 
     [SerializeField] private float speed = 3f;
     [SerializeField] private float minDistance = 10f; 
@@ -12,6 +14,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float knockbackCooldown = 1f;
     public FloatingHealthBar healthBar;
     public Player playerScript;
+    public PlayerMovement playerMovementScript;
     public Enemy enemyScript;
     private int damageAmount = 20;
     private int currentHealth;
@@ -19,6 +22,8 @@ public class Enemy : MonoBehaviour
 
     private bool isKnockbackCooldown = false;
     private float knockbackCooldownTimer = 0f;
+
+    public Rigidbody2D rb;
 
     public Animator anim;
     // Start is called before the first frame update
@@ -29,6 +34,7 @@ public class Enemy : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         enemyScript = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
+        playerMovementScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -57,10 +63,14 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject == player) // Check if the collision is made with player
         {
+            playerMovementScript.rb.sharedMaterial = hitMaterial;
+            anim.SetTrigger("hit"); // Play hit animation
+
             Vector2 knockbackDirection = (player.transform.position - transform.position).normalized; // Calculate direction from enemy to player
             Rigidbody2D playerRigidbody = player.GetComponent<Rigidbody2D>(); // Apply force to player
             playerRigidbody.AddForce(knockbackDirection * knockbackForce); // Apply force to player
-            anim.SetTrigger("hit"); // Play hit animation
+
+            
 
             isKnockbackCooldown = true;
             knockbackCooldownTimer = knockbackCooldown;
@@ -91,6 +101,7 @@ public class Enemy : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f); // Adjust the duration as needed
 
+        playerMovementScript.rb.sharedMaterial = defaultMaterial;
         // Resume normal movement (if required)
     }
 
