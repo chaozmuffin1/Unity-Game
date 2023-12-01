@@ -929,6 +929,7 @@ MonoBehaviour:
   healthBar: {fileID: 137801923}
   playerScript: {fileID: 0}
   enemyScript: {fileID: 0}
+  anim: {fileID: 619277997}
 --- !u!61 &466168814
 BoxCollider2D:
   m_ObjectHideFlags: 0
