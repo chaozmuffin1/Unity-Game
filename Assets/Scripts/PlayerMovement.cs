@@ -85,6 +85,12 @@ public class PlayerMovement : MonoBehaviour{
             currentDashCooldown += Time.deltaTime;
             currentDashCooldown = Mathf.Clamp(currentDashCooldown, 0.0f, dashCooldown);
         }
+        /*LayerMask maskDash = LayerMask.GetMask("Ground");
+        RaycastHit2D wallDashDetectionRight = Physics2D.BoxCast(transform.position, coll.bounds.size, 0f, Vector3.right, 1.5f, maskDash);
+        RaycastHit2D wallDashDetectionLeft = Physics2D.BoxCast(transform.position, coll.bounds.size, 0f, Vector3.left, 1.5f, maskDash);
+        if (isGrounded() || wallDashDetectionRight || wallDashDetectionLeft){
+            dashScript.TurnOff();
+        }*/
         if (isMovementEnabled){
         
         //layermask component for the boxcast so it only detects collisions with ground
@@ -105,7 +111,6 @@ public class PlayerMovement : MonoBehaviour{
         //if a collision is not detected the player is on the ground or in the air and the player will have friction
             rb.sharedMaterial = defaultMaterial;
         }
-        
         if(playerControls.Land.Jump.triggered && isGrounded()){
             rb.gravityScale = 2;
             float jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * rb.gravityScale));

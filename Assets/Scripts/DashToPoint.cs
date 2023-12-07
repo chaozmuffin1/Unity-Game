@@ -6,28 +6,33 @@ public class DashToPoint : MonoBehaviour
 {
 //the player's dash speed
     public Rigidbody2D rb;
-    public float dashSpeed = 14;
+    public float dashSpeed = 2000;
     Vector2 lastClickedPos;
     public bool moving;
     public bool closeToPos;
-    public float cooldown = 0.0f;
-    
+    public float maxDistance = 5;
+    public Vector2 position;
+    public PlayerMovement playerMovementScript;
 
     public void Start(){
         TurnOff();
+        playerMovementScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
     void Update()
     {
-        cooldown += Time.deltaTime;
-        if (Input.GetMouseButtonDown(0) && cooldown >=1f){
+        //add code so player can't dash to a point behind them if they are moving the opposite direction
+        //fix bug with constant clicking leading to no dash cooldown
+        if (Input.GetKeyDown(KeyCode.C/*GetMouseButtonDown(0)*/) && moving == false){
+            GetInitialPosition();
+            rb.velocity = Vector2.zero;
             lastClickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Debug.Log(lastClickedPos);
             moving = true;
-            cooldown = 0.0f;
         }
-        if (moving && ((Vector2)transform.position - lastClickedPos).magnitude >= 2){
+        if (moving && ((Vector2)transform.position - lastClickedPos).magnitude >= 2 && ((Vector2)transform.position - position).magnitude <= 7.5f && playerMovementScript.isGrounded() == false){
             GetComponent<PlayerMovement>().currentDashCooldown = 0;
             GetComponent<Rigidbody2D>().gravityScale = 0;
-            float step = dashSpeed * Time.deltaTime;
+            float step =  0.017f + (dashSpeed * Time.deltaTime);
             transform.position = Vector2.MoveTowards(transform.position, lastClickedPos, step);
             closeToPos = false;
         }else{
@@ -38,6 +43,9 @@ public class DashToPoint : MonoBehaviour
     }
     public void TurnOn(){
         this.enabled = true;
+    }
+    public void GetInitialPosition(){
+        position = transform.position;
     }
     public void TurnOff(){
         if (closeToPos == true){
