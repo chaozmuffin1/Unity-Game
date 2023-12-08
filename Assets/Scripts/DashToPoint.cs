@@ -21,15 +21,17 @@ public class DashToPoint : MonoBehaviour
     void Update()
     {
         //add code so player can't dash to a point behind them if they are moving the opposite direction
-        //fix bug with constant clicking leading to no dash cooldown
         if (Input.GetKeyDown(KeyCode.C/*GetMouseButtonDown(0)*/) && moving == false){
             GetInitialPosition();
+            playerMovementScript.isMovementEnabledDash = false;
             rb.velocity = Vector2.zero;
             lastClickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Debug.Log(lastClickedPos);
             moving = true;
         }
-        if (moving && ((Vector2)transform.position - lastClickedPos).magnitude >= 2 && ((Vector2)transform.position - position).magnitude <= 7.5f && playerMovementScript.isGrounded() == false){
+        //Vector2 difference = lastClickedPos - (Vector2)transform.position;
+        if (moving && (lastClickedPos - (Vector2)transform.position).magnitude >= 2 && ((Vector2)transform.position - position).magnitude <= 7.5f && playerMovementScript.isGrounded() == false /*&& ((rb.velocity.x>0 && (lastClickedPos - (Vector2)transform.position).x > 0) || (rb.velocity.x<0 && (lastClickedPos - (Vector2)transform.position).x < 0) || rb.velocity.x = 0)*/){
+            playerMovementScript.isMovementEnabledDash = false;
             GetComponent<PlayerMovement>().currentDashCooldown = 0;
             GetComponent<Rigidbody2D>().gravityScale = 0;
             float step =  0.017f + (dashSpeed * Time.deltaTime);
@@ -52,7 +54,13 @@ public class DashToPoint : MonoBehaviour
         GetComponent<Rigidbody2D>().gravityScale = 2;
         moving = false;
         lastClickedPos = Vector2.zero;
+        playerMovementScript.EnableMovementAfterDash();
         this.enabled = false;
         }
     }
+
+
+    //Vector2 difference = lastClickedPos - (Vector2)transform.position;
+
+    //rb.velocity.x>0 && difference.x > 0 
 }

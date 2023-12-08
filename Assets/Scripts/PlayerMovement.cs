@@ -36,6 +36,8 @@ public class PlayerMovement : MonoBehaviour{
     public bool runLeft;
     //checks if player can move or if the player is on knockback cooldown
     private bool isMovementEnabled = true;
+    //enables or disables other movement while dash is occuring
+    public bool isMovementEnabledDash = true;
     //amount of seconds player is on cooldown for
     private float movementCooldown = 1f;
     //timer that will count until it equals the movement cooldown
@@ -91,7 +93,7 @@ public class PlayerMovement : MonoBehaviour{
         if (isGrounded() || wallDashDetectionRight || wallDashDetectionLeft){
             dashScript.TurnOff();
         }*/
-        if (isMovementEnabled){
+        if (isMovementEnabled && isMovementEnabledDash){
         
         //layermask component for the boxcast so it only detects collisions with ground
         LayerMask mask = LayerMask.GetMask("Ground");
@@ -150,6 +152,10 @@ public class PlayerMovement : MonoBehaviour{
         if(jumpCancelled && jumping && rb.velocity.y > 0){
             rb.AddForce(Vector2.down * cancelRate);
         }
+        if(isGrounded() == false){
+            runLeft = false;
+            runRight = false;
+        }
         if(rb.velocity.x<-1 && isGrounded()){
             anim.SetBool("running",true);
             sprite.flipX = true;
@@ -173,8 +179,10 @@ public class PlayerMovement : MonoBehaviour{
                 anim.SetBool("jumping", false);
                 anim.SetBool("falling", true);
             }else{
-                anim.SetBool("jumping", false);
-                anim.SetBool("falling", false);
+                if(isGrounded() == true){
+                    anim.SetBool("jumping", false);
+                    anim.SetBool("falling", false);
+                }
             }
             
         }
@@ -192,6 +200,12 @@ public class PlayerMovement : MonoBehaviour{
     {
         isMovementEnabled = false;
         movementCooldownTimer = movementCooldown;
+    }
+    public void DisableMovementForDash(){
+        isMovementEnabledDash = false;
+    }
+    public void EnableMovementAfterDash(){
+        isMovementEnabledDash = true;
     }
 }
     
