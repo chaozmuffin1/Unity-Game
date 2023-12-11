@@ -142,16 +142,23 @@ public class PlayerMovement : MonoBehaviour{
     }
     
     public void FixedUpdate(){
+        if(rb.velocity.x<-0.2){
+            sprite.flipX = true;
+        }else{
+            if(rb.velocity.x>0.2){
+                sprite.flipX = false;
+            }
+        }
         if(jumpCancelled && jumping && rb.velocity.y > 0){
             rb.AddForce(Vector2.down * cancelRate);
         }
-        if(rb.velocity.x<-1 && isGrounded()){
+        if(rb.velocity.x<-0.2 && isGrounded()){
             anim.SetBool("running",true);
             sprite.flipX = true;
             runLeft = true;
             runRight = false;
         }else{
-            if(rb.velocity.x>1 && isGrounded()){
+            if(rb.velocity.x>0.2 && isGrounded()){
             anim.SetBool("running",true);
             sprite.flipX = false;
             runRight = true;
