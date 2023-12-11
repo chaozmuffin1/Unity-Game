@@ -1707,6 +1707,7 @@ MonoBehaviour:
   sprite: {fileID: 619277991}
   runRight: 0
   runLeft: 0
+  isMovementEnabledDash: 1
   material: {fileID: 6200000, guid: 02a6e7f928908d245b22807e97f9f618, type: 2}
   defaultMaterial: {fileID: 6200000, guid: 30eebd381b57f7a43a246e6960569d72, type: 2}
 --- !u!212 &619277991
@@ -1989,7 +1990,9 @@ MonoBehaviour:
   dashSpeed: 14
   moving: 0
   closeToPos: 0
-  cooldown: 0
+  maxDistance: 5
+  position: {x: 0, y: 0}
+  playerMovementScript: {fileID: 0}
 --- !u!1 &675027989
 GameObject:
   m_ObjectHideFlags: 0
