@@ -9,7 +9,7 @@ public class PlayerCombat : MonoBehaviour
     public Transform attackPointLeft;
     public float attackRange = 1f;
     public LayerMask enemyLayers;
-    public float knockbackForce = 15f;
+    public float knockbackForce = 5f;
     public Rigidbody2D rb;
     public bool runRight = true;
 
