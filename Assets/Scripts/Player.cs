@@ -45,6 +45,11 @@ public class Player : MonoBehaviour
             //sets the enemy game object to inactive
             enemy.SetActive(false);
         }
+
+        if (player.transform.position.y <= -7)
+        {
+            currentHealth = 0;
+        }
     }
 
     //a function that can be called so the player takes damage
