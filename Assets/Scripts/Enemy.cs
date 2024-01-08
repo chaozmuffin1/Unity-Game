@@ -7,7 +7,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private PhysicsMaterial2D hitMaterial;
     [SerializeField] private PhysicsMaterial2D defaultMaterial;
-
     [SerializeField] private float speed = 3f;
     [SerializeField] private float minDistance = 10f; 
     [SerializeField] private float knockbackForce = 500f;
@@ -19,13 +18,11 @@ public class Enemy : MonoBehaviour
     private int damageAmount = 20;
     private int currentHealth;
     private int maxHealth = 20;
-
     private bool isKnockbackCooldown = false;
     private float knockbackCooldownTimer = 0f;
-
     public Rigidbody2D rb;
-
     public Animator anim;
+    
     // Start is called before the first frame update
     void Start()
     {

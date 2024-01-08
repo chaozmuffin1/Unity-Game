@@ -93,6 +93,7 @@ public class PlayerMovement : MonoBehaviour{
         if (isGrounded() || wallDashDetectionRight || wallDashDetectionLeft){
             dashScript.TurnOff();
         }*/
+        Flip();
         if (isMovementEnabled && isMovementEnabledDash){
         
         //layermask component for the boxcast so it only detects collisions with ground
@@ -135,9 +136,11 @@ public class PlayerMovement : MonoBehaviour{
         }
         if (playerControls.Land.Right.IsPressed()){
             rb.velocity = new Vector2(moveSpeed,rb.velocity.y);
+            //transform.Rotate(0f, 0f, 0f);
         }
         if (playerControls.Land.Left.IsPressed()){
             rb.velocity = new Vector2(-moveSpeed,rb.velocity.y);
+            //transform.Rotate(0f, 180f, 0f);
         }
         }else{
             movementCooldownTimer -= Time.deltaTime;
@@ -150,10 +153,10 @@ public class PlayerMovement : MonoBehaviour{
     
     public void FixedUpdate(){
         if(rb.velocity.x<-0.2){
-            sprite.flipX = true;
+            //sprite.flipX = true;
         }else{
             if(rb.velocity.x>0.2){
-                sprite.flipX = false;
+                //sprite.flipX = false;
             }
         }
         if(jumpCancelled && jumping && rb.velocity.y > 0){
@@ -165,13 +168,13 @@ public class PlayerMovement : MonoBehaviour{
         }
         if(rb.velocity.x<-0.2 && isGrounded()){
             anim.SetBool("running",true);
-            sprite.flipX = true;
+            //sprite.flipX = true;
             runLeft = true;
             runRight = false;
         }else{
             if(rb.velocity.x>0.2 && isGrounded()){
             anim.SetBool("running",true);
-            sprite.flipX = false;
+            //sprite.flipX = false;
             runRight = true;
             runLeft = false;
         }else{
@@ -214,6 +217,17 @@ public class PlayerMovement : MonoBehaviour{
     public void EnableMovementAfterDash(){
         isMovementEnabledDash = true;
     }
+
+    private void Flip(){
+    // Rotate the player
+    if (transform.localEulerAngles.y != 180 && rb.velocity.x<-0.5)
+        transform.Rotate(0f, 180f, 0f);
+    else if(transform.localEulerAngles.y != 0 && rb.velocity.x>0.5)
+            transform.Rotate(0f, -180f, 0f);
+
+    // player flip point of attack also flip is direction
+    //transform.Rotate(0f, 180f, 0f);
+}
 }
     
 

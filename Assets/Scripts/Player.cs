@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     //the enemy game object
     [SerializeField] private GameObject enemy = null;
 
+    public WpnCrshrEnableDisable weaponScript;
+
     void Start()
     {
         //sets the deathScreen game object to false
@@ -30,6 +32,7 @@ public class Player : MonoBehaviour
         currentHealth = maxHealth;
         //sets health on the health bar to 100 (function is in the HealthBar script)
         healthBar.SetMaxHealth(maxHealth);
+        weaponScript = GameObject.FindGameObjectWithTag("Player").GetComponent<WpnCrshrEnableDisable>();
     }
 
     void Update()
@@ -44,6 +47,7 @@ public class Player : MonoBehaviour
             player.SetActive(false);
             //sets the enemy game object to inactive
             enemy.SetActive(false);
+            weaponScript.Disable();
         }
 
         if (player.transform.position.y <= -7)

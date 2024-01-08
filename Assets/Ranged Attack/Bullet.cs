@@ -1,0 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Bullet : MonoBehaviour
+{
+    public float speed = 20f;
+    public int damage = 5;
+    public Rigidbody2D rb;
+
+    public Vector3 oldPos;
+    public float totalDistance = 0;
+    // Start is called before the first frame update
+    void Start()
+    {
+        rb.velocity = transform.right * speed;
+        oldPos = transform.position;
+    }
+
+    void Update(){
+        Vector3 distanceVector = transform.position - oldPos;
+        float distanceThisFrame = distanceVector.magnitude;
+        totalDistance += distanceThisFrame;
+        oldPos = transform.position;
+        if (totalDistance >= 20){
+            Destroy(gameObject);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D hitInfo){
+        Enemy enemy = hitInfo.GetComponent<Enemy>();
+        if (enemy != null){
+            enemy.TakeDamage(damage);
+        }
+        Destroy(gameObject);
+    }
+}

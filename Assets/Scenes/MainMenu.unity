@@ -583,10 +583,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1230630812}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9fdd813cff5b9e4d88e1f595b677ca1, type: 3}
+  m_Script: {fileID: 11500000, guid: c10e4f21738c0a04ca898c7cb3b8b950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: ControlMenu
 --- !u!1 &1328153452
 GameObject:
   m_ObjectHideFlags: 0

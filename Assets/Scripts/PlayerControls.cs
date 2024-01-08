@@ -53,6 +53,33 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""21073e14-85df-4f84-90f3-3d23557c08ad"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EnableMelee"",
+                    ""type"": ""Button"",
+                    ""id"": ""3dc1f828-573c-4a11-9c73-a632cb5ca38b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EnableFire"",
+                    ""type"": ""Button"",
+                    ""id"": ""dd4b7c7d-d108-4a4a-b362-9b78f87b32ed"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -86,6 +113,39 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a98edc76-ae40-4171-aa16-d7b9e9b13f35"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e3196859-d885-40f3-9bb2-20be0266fcca"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EnableFire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0a6f0dd3-1487-4e91-8db8-47e8ea818963"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EnableMelee"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -127,6 +187,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Land_Jump = m_Land.FindAction("Jump", throwIfNotFound: true);
         m_Land_Left = m_Land.FindAction("Left", throwIfNotFound: true);
         m_Land_Right = m_Land.FindAction("Right", throwIfNotFound: true);
+        m_Land_Fire = m_Land.FindAction("Fire", throwIfNotFound: true);
+        m_Land_EnableMelee = m_Land.FindAction("EnableMelee", throwIfNotFound: true);
+        m_Land_EnableFire = m_Land.FindAction("EnableFire", throwIfNotFound: true);
         // Dead
         m_Dead = asset.FindActionMap("Dead", throwIfNotFound: true);
         m_Dead_Newaction = m_Dead.FindAction("New action", throwIfNotFound: true);
@@ -192,6 +255,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Land_Jump;
     private readonly InputAction m_Land_Left;
     private readonly InputAction m_Land_Right;
+    private readonly InputAction m_Land_Fire;
+    private readonly InputAction m_Land_EnableMelee;
+    private readonly InputAction m_Land_EnableFire;
     public struct LandActions
     {
         private @PlayerControls m_Wrapper;
@@ -199,6 +265,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Land_Jump;
         public InputAction @Left => m_Wrapper.m_Land_Left;
         public InputAction @Right => m_Wrapper.m_Land_Right;
+        public InputAction @Fire => m_Wrapper.m_Land_Fire;
+        public InputAction @EnableMelee => m_Wrapper.m_Land_EnableMelee;
+        public InputAction @EnableFire => m_Wrapper.m_Land_EnableFire;
         public InputActionMap Get() { return m_Wrapper.m_Land; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -217,6 +286,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Right.started -= m_Wrapper.m_LandActionsCallbackInterface.OnRight;
                 @Right.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnRight;
                 @Right.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnRight;
+                @Fire.started -= m_Wrapper.m_LandActionsCallbackInterface.OnFire;
+                @Fire.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnFire;
+                @Fire.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnFire;
+                @EnableMelee.started -= m_Wrapper.m_LandActionsCallbackInterface.OnEnableMelee;
+                @EnableMelee.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnEnableMelee;
+                @EnableMelee.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnEnableMelee;
+                @EnableFire.started -= m_Wrapper.m_LandActionsCallbackInterface.OnEnableFire;
+                @EnableFire.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnEnableFire;
+                @EnableFire.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnEnableFire;
             }
             m_Wrapper.m_LandActionsCallbackInterface = instance;
             if (instance != null)
@@ -230,6 +308,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Right.started += instance.OnRight;
                 @Right.performed += instance.OnRight;
                 @Right.canceled += instance.OnRight;
+                @Fire.started += instance.OnFire;
+                @Fire.performed += instance.OnFire;
+                @Fire.canceled += instance.OnFire;
+                @EnableMelee.started += instance.OnEnableMelee;
+                @EnableMelee.performed += instance.OnEnableMelee;
+                @EnableMelee.canceled += instance.OnEnableMelee;
+                @EnableFire.started += instance.OnEnableFire;
+                @EnableFire.performed += instance.OnEnableFire;
+                @EnableFire.canceled += instance.OnEnableFire;
             }
         }
     }
@@ -272,6 +359,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnLeft(InputAction.CallbackContext context);
         void OnRight(InputAction.CallbackContext context);
+        void OnFire(InputAction.CallbackContext context);
+        void OnEnableMelee(InputAction.CallbackContext context);
+        void OnEnableFire(InputAction.CallbackContext context);
     }
     public interface IDeadActions
     {
