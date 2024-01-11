@@ -67,11 +67,7 @@ public class PlayerCombat : MonoBehaviour
         animator.SetTrigger("attack");
 
         // Detect enemies in range of attack
-        if (runRight == true){
-            hitEnemies = Physics2D.OverlapCircleAll(attackPointRight.position, attackRange, enemyLayers);
-        }else{
-            hitEnemies = Physics2D.OverlapCircleAll(attackPointLeft.position, attackRange, enemyLayers);
-        }
+        hitEnemies = Physics2D.OverlapCircleAll(attackPointRight.position, attackRange, enemyLayers);
         //Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointRight.position, attackRange, enemyLayers);
 
         // continue video at 7:32
@@ -79,19 +75,19 @@ public class PlayerCombat : MonoBehaviour
         foreach(Collider2D enemy in hitEnemies)
         {
             // Get the enemy's rigidbody
-            Rigidbody2D enemyRigidbody = enemy.GetComponent<Rigidbody2D>();
+            //Rigidbody2D enemyRigidbody = enemy.GetComponent<Rigidbody2D>();
 
             // Calculate the knockback direction (from enemy to player)
-            Vector2 knockbackDirection = (enemy.transform.position - transform.position).normalized;
+            //Vector2 knockbackDirection = (enemy.transform.position - transform.position).normalized;
 
             // Apply knockback force to the enemy
-            enemyRigidbody.velocity = knockbackDirection * knockbackForce;
+            //enemyRigidbody.velocity = knockbackDirection * knockbackForce;
 
             // Damage the enemy
-            enemy.GetComponent<Enemy>().TakeDamage(5);
+            enemy.GetComponent<PatrollingEnemy>().TakeDamage(5);
 
             // Disable the enemy's movement for a second
-            enemy.GetComponent<Enemy>().DisableMovementForCooldown();
+            //enemy.GetComponent<Enemy>().DisableMovementForCooldown();
         }
     }
 

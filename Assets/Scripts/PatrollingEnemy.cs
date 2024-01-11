@@ -14,14 +14,33 @@ public class PatrollingEnemy : MonoBehaviour
     public float patrolSpeed = 5;
     public float agroSpeed = 8;
     [SerializeField] private Transform player;
+    [SerializeField] private GameObject playerObject;
     [SerializeField] private float agroRange;
     public Animator anim;
+    private int currentHealth;
+    private int maxHealth = 20;
+    public FloatingHealthBar healthBar;
+    public Player playerScript;
+    public PlayerMovement playerMovementScript;
+    private int damageAmount = 20;
+    [SerializeField] private GameObject canvas;
+    public Transform parent;
+    [SerializeField] private Transform healthBarObject;
+    [SerializeField] private Transform background;
+    [SerializeField] private Transform fillArea;
+    [SerializeField] private Transform fill;
+    
 
     void Start(){
         baseScale = transform.localScale;
         facingDirection = RIGHT;
         rb = GetComponent<Rigidbody2D>();
         anim = player.GetComponent<Animator>();
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        playerMovementScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+
     }
 
     private void FixedUpdate(){
@@ -67,7 +86,9 @@ public class PatrollingEnemy : MonoBehaviour
         }else{
             newScale.x = baseScale.x;
         }
+        //canvas.transform.SetParent(null, false);
         transform.localScale = newScale;
+        //canvas.transform.SetParent(transform, false);
         facingDirection = newDirection;
     }
 
@@ -109,5 +130,38 @@ public class PatrollingEnemy : MonoBehaviour
         }
 
         return val;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        Debug.Log("damage");
+        healthBar.SetHealth(currentHealth);
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject == playerObject) // Check if the collision is made with player
+        {
+            anim.SetTrigger("hit"); // Play hit animation
+
+            Rigidbody2D playerRigidbody = playerObject.GetComponent<Rigidbody2D>(); // Apply force to player
+
+            //Disable player's movement for a second
+            PlayerMovement.instance.DisableMovementForCooldown();
+
+            Debug.Log("collision detected");
+            playerScript.TakeDamage(damageAmount);
+        }
     }
 }
