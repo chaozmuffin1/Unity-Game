@@ -6,6 +6,7 @@ public class WpnCrshrEnableDisable : MonoBehaviour
 {
     public Weapon weaponScript;
     public Crosshair crosshairScript;
+    public PlayerCombat meleeScript;
     bool enOrDis;
     private PlayerControls playerControls;
 
@@ -26,6 +27,8 @@ public class WpnCrshrEnableDisable : MonoBehaviour
         enOrDis = false;
         weaponScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Weapon>();
         crosshairScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Crosshair>();
+        meleeScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCombat>();
+        meleeScript.enabled = true;
         weaponScript.enabled = false;
         crosshairScript.enabled = false;
     }
@@ -37,7 +40,16 @@ public class WpnCrshrEnableDisable : MonoBehaviour
             weaponScript.enabled = true;
             crosshairScript.enabled = true;
             crosshairScript.OnEnable();
+            enOrDis = true;
+            meleeScript.enabled = false;
         } 
+        if (playerControls.Land.EnableMelee.WasPressedThisFrame() && enOrDis == true){
+            weaponScript.enabled = false;
+            crosshairScript.OnDisable();
+            meleeScript.enabled = true;
+            crosshairScript.enabled = false;
+            enOrDis = false;
+        }
     }
 
     public void Disable(){

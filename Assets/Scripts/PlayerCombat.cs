@@ -84,7 +84,7 @@ public class PlayerCombat : MonoBehaviour
             //enemyRigidbody.velocity = knockbackDirection * knockbackForce;
 
             // Damage the enemy
-            enemy.GetComponent<PatrollingEnemy>().TakeDamage(5);
+            enemy.GetComponent<EnemyHealth>().TakeDamage(5);
 
             // Disable the enemy's movement for a second
             //enemy.GetComponent<Enemy>().DisableMovementForCooldown();

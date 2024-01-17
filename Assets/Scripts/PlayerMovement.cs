@@ -10,11 +10,12 @@ public class PlayerMovement : MonoBehaviour{
     //the maximum amount of time that will be read as a jump input
     public float buttonTime = 0.5f;
     //the vertical distance the player is able to jump
-    public float jumpHeight = 5;
+    public float jumpHeight = 3;
     //adds initial downwards force after a jump is cancelled
     public float cancelRate = 100;
     //the player's movement speed
     public float moveSpeed = 8;
+    public float sprintSpeed;
     public DashToPoint dashScript;
     public bool dashReady = false;
     public float dashCooldown = 10f;
@@ -54,14 +55,17 @@ public class PlayerMovement : MonoBehaviour{
     public void Awake(){
         playerControls = new PlayerControls();
     }
+
     //enables the player inputs
     public void OnEnable(){
         playerControls.Enable();
     }
+
     //disables the player inputs
     public void OnDisable(){
         playerControls.Disable();
     }
+
     public void Start(){
         //gets the player's box collider
         coll = GetComponent<BoxCollider2D>();
@@ -74,6 +78,7 @@ public class PlayerMovement : MonoBehaviour{
         anim.SetBool("attack",false);
         dashScript = GameObject.FindGameObjectWithTag("Player").GetComponent<DashToPoint>();
     }
+
     public void Update(){
         if (isGrounded() == false && dashReady == true){
             dashScript.TurnOn();
@@ -87,12 +92,6 @@ public class PlayerMovement : MonoBehaviour{
             currentDashCooldown += Time.deltaTime;
             currentDashCooldown = Mathf.Clamp(currentDashCooldown, 0.0f, dashCooldown);
         }
-        /*LayerMask maskDash = LayerMask.GetMask("Ground");
-        RaycastHit2D wallDashDetectionRight = Physics2D.BoxCast(transform.position, coll.bounds.size, 0f, Vector3.right, 1.5f, maskDash);
-        RaycastHit2D wallDashDetectionLeft = Physics2D.BoxCast(transform.position, coll.bounds.size, 0f, Vector3.left, 1.5f, maskDash);
-        if (isGrounded() || wallDashDetectionRight || wallDashDetectionLeft){
-            dashScript.TurnOff();
-        }*/
         Flip();
         if (isMovementEnabled && isMovementEnabledDash){
         
@@ -135,13 +134,25 @@ public class PlayerMovement : MonoBehaviour{
             }
         }
         if (playerControls.Land.Right.IsPressed()){
-            rb.velocity = new Vector2(moveSpeed,rb.velocity.y);
-            //transform.Rotate(0f, 0f, 0f);
+            if (playerControls.Land.Sprint.IsPressed()){
+                rb.velocity = new Vector2(sprintSpeed,rb.velocity.y);
+            }else{
+                rb.velocity = new Vector2(moveSpeed,rb.velocity.y);
+            }
+        }else{
+            if (playerControls.Land.Left.IsPressed()){
+                if (playerControls.Land.Sprint.IsPressed()){
+                    rb.velocity = new Vector2(-sprintSpeed,rb.velocity.y);
+                }else{
+                    rb.velocity = new Vector2(-moveSpeed,rb.velocity.y);
+                }
+            }else{
+                if (isGrounded()){
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                }
+            }
         }
-        if (playerControls.Land.Left.IsPressed()){
-            rb.velocity = new Vector2(-moveSpeed,rb.velocity.y);
-            //transform.Rotate(0f, 180f, 0f);
-        }
+        
         }else{
             movementCooldownTimer -= Time.deltaTime;
             if (movementCooldownTimer <= 0f)
@@ -152,13 +163,6 @@ public class PlayerMovement : MonoBehaviour{
     }
     
     public void FixedUpdate(){
-        if(rb.velocity.x<-0.2){
-            //sprite.flipX = true;
-        }else{
-            if(rb.velocity.x>0.2){
-                //sprite.flipX = false;
-            }
-        }
         if(jumpCancelled && jumping && rb.velocity.y > 0){
             rb.AddForce(Vector2.down * cancelRate);
         }
@@ -168,13 +172,11 @@ public class PlayerMovement : MonoBehaviour{
         }
         if(rb.velocity.x<-0.2 && isGrounded()){
             anim.SetBool("running",true);
-            //sprite.flipX = true;
             runLeft = true;
             runRight = false;
         }else{
             if(rb.velocity.x>0.2 && isGrounded()){
             anim.SetBool("running",true);
-            //sprite.flipX = false;
             runRight = true;
             runLeft = false;
         }else{
@@ -219,15 +221,12 @@ public class PlayerMovement : MonoBehaviour{
     }
 
     private void Flip(){
-    // Rotate the player
-    if (transform.localEulerAngles.y != 180 && rb.velocity.x<-0.5)
-        transform.Rotate(0f, 180f, 0f);
-    else if(transform.localEulerAngles.y != 0 && rb.velocity.x>0.5)
+        // Flip the player and it's children objects
+        if (transform.localEulerAngles.y != 180 && rb.velocity.x<-0.5)
+            transform.Rotate(0f, 180f, 0f);
+        else if(transform.localEulerAngles.y != 0 && rb.velocity.x>0.5)
             transform.Rotate(0f, -180f, 0f);
-
-    // player flip point of attack also flip is direction
-    //transform.Rotate(0f, 180f, 0f);
-}
+    }
 }
     
 

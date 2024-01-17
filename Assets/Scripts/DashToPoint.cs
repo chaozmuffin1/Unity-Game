@@ -21,7 +21,7 @@ public class DashToPoint : MonoBehaviour
     void Update()
     {
         //add code so player can't dash to a point behind them if they are moving the opposite direction
-        if (Input.GetMouseButtonDown(1) && moving == false){
+        if (Input.GetKeyDown("c")/*Input.GetMouseButtonDown(1)*/ && moving == false){
             GetInitialPosition();
             playerMovementScript.isMovementEnabledDash = false;
             rb.velocity = Vector2.zero;
