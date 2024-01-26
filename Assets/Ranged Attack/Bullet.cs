@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Bullet : MonoBehaviour
 {
@@ -29,9 +30,14 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D hitInfo){
         EnemyHealth enemy = hitInfo.GetComponent<EnemyHealth>();
+        TilemapCollider2D tileCollider = hitInfo.GetComponent<TilemapCollider2D>();
         if (enemy != null){
             enemy.TakeDamage(damage);
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
+        if (tileCollider != null){
+            Destroy(gameObject);
+        }
+        //Destroy(gameObject);
     }
 }

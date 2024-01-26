@@ -89,6 +89,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MeleeAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""20c7d543-4d61-49f8-a381-ce46f0698710"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -96,6 +105,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""6d1d59d0-921a-42f9-85d7-3423dad0ae47"",
                     ""path"": ""<Keyboard>/w"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ae597c0a-7393-479d-84a8-d28b2f2af8b2"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
@@ -168,6 +188,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0f16a65f-06f9-43d8-b018-44c49814a804"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MeleeAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -211,6 +242,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Land_EnableMelee = m_Land.FindAction("EnableMelee", throwIfNotFound: true);
         m_Land_EnableFire = m_Land.FindAction("EnableFire", throwIfNotFound: true);
         m_Land_Sprint = m_Land.FindAction("Sprint", throwIfNotFound: true);
+        m_Land_MeleeAttack = m_Land.FindAction("MeleeAttack", throwIfNotFound: true);
         // Dead
         m_Dead = asset.FindActionMap("Dead", throwIfNotFound: true);
         m_Dead_Newaction = m_Dead.FindAction("New action", throwIfNotFound: true);
@@ -280,6 +312,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Land_EnableMelee;
     private readonly InputAction m_Land_EnableFire;
     private readonly InputAction m_Land_Sprint;
+    private readonly InputAction m_Land_MeleeAttack;
     public struct LandActions
     {
         private @PlayerControls m_Wrapper;
@@ -291,6 +324,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @EnableMelee => m_Wrapper.m_Land_EnableMelee;
         public InputAction @EnableFire => m_Wrapper.m_Land_EnableFire;
         public InputAction @Sprint => m_Wrapper.m_Land_Sprint;
+        public InputAction @MeleeAttack => m_Wrapper.m_Land_MeleeAttack;
         public InputActionMap Get() { return m_Wrapper.m_Land; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -321,6 +355,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Sprint.started -= m_Wrapper.m_LandActionsCallbackInterface.OnSprint;
                 @Sprint.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnSprint;
                 @Sprint.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnSprint;
+                @MeleeAttack.started -= m_Wrapper.m_LandActionsCallbackInterface.OnMeleeAttack;
+                @MeleeAttack.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnMeleeAttack;
+                @MeleeAttack.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnMeleeAttack;
             }
             m_Wrapper.m_LandActionsCallbackInterface = instance;
             if (instance != null)
@@ -346,6 +383,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
+                @MeleeAttack.started += instance.OnMeleeAttack;
+                @MeleeAttack.performed += instance.OnMeleeAttack;
+                @MeleeAttack.canceled += instance.OnMeleeAttack;
             }
         }
     }
@@ -392,6 +432,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnEnableMelee(InputAction.CallbackContext context);
         void OnEnableFire(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnMeleeAttack(InputAction.CallbackContext context);
     }
     public interface IDeadActions
     {

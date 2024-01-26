@@ -7,7 +7,7 @@ public class PlayerCombat : MonoBehaviour
     public Animator animator;
     public Transform attackPointRight;
     public Transform attackPointLeft;
-    public float attackRange = 1f;
+    public float attackRange = 1.05f;
     public LayerMask enemyLayers;
     public float knockbackForce = 5f;
     public Rigidbody2D rb;
@@ -22,8 +22,21 @@ public class PlayerCombat : MonoBehaviour
     //the time that has passed since the player last attacked
     public float cooldownCurrent = 0.0f;
 
+    private PlayerControls playerControls;
+
     void Start(){
         rb = GetComponent<Rigidbody2D>();
+    }
+    public void Awake(){
+        playerControls = new PlayerControls();
+    }
+    //enables the player inputs
+    public void OnEnable(){
+        playerControls.Enable();
+    }
+    //disables the player inputs
+    public void OnDisable(){
+        playerControls.Disable();
     }
     // Update is called once per frame
     void Update()
@@ -46,14 +59,14 @@ public class PlayerCombat : MonoBehaviour
             cooldownCurrent = Mathf.Clamp(cooldownCurrent, 0.0f, cooldown);
         }
         //function that is used for every attack after the first attack
-        if (Input.GetKeyDown(KeyCode.Space) && attackReady && firstAttack == false)
+        if (playerControls.Land.MeleeAttack.WasPressedThisFrame() && attackReady && firstAttack == false)
         {
             Attack();
             //resets the time since the last attack to 0 so the player needs to wait again
             cooldownCurrent = 0.0f;
         }
         //seperate function for the first attack so the player doesn't have to wait cooldownCurrent to be greater than cooldown
-        if (Input.GetKeyDown(KeyCode.Space) && firstAttack){
+        if (playerControls.Land.MeleeAttack.WasPressedThisFrame() && firstAttack){
             Attack();
             //sets firstAttack to false so this function isn't called again
             firstAttack = false;

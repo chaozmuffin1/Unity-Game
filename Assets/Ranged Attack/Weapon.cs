@@ -10,6 +10,7 @@ public class Weapon : MonoBehaviour
     public float lookAngle;
     public GameObject bulletPrefab;
     private PlayerControls playerControls;
+    //public float timeSinceLastShot;
 
     // Start is called before the first frame update
     public void Awake(){
@@ -34,7 +35,9 @@ public class Weapon : MonoBehaviour
         firePoint.rotation = Quaternion.Euler(0,0,0);
         lookDirection = Vector2.zero;
         lookDirection = ((Camera.main.ScreenToWorldPoint(Input.mousePosition)) - transform.position);
-        if (transform.localEulerAngles.y != 180){
+        lookAngle = (Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg);
+        firePoint.rotation = Quaternion.Euler(0,0,lookAngle);
+        /*if (transform.localEulerAngles.y != 180){
             lookAngle = Mathf.Clamp((Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg), -75, 75);
             firePoint.rotation = Quaternion.Euler(0, 0, lookAngle);
         }else{
@@ -43,17 +46,30 @@ public class Weapon : MonoBehaviour
                 lookAngle = Mathf.Clamp((Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg), -75, 75);
                 firePoint.rotation = Quaternion.Euler(0, -180, lookAngle);
             }
-        }
-        //lookAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
-        //Debug.Log(lookAngle);
-        //firePoint.rotation = Quaternion.Euler(0, 0, lookAngle);
-
+        }*/
+//firepoint x pos was 1.2
         if (playerControls.Land.Fire.WasPressedThisFrame()){
             Shoot();
+            //timeSinceLastShot = 0f;
+        }else{
+            //timeSinceLastShot += Time.deltaTime;
         }
     }
 
     void Shoot(){
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
     }
+
+    /*public void AmmoGaugeRecharge(){
+        if (timeSinceLastShot >= 3f){
+            //recharge smoothly
+            //indicate in the game using lines on the slider for 1 shot, 2 shots, or a full bar
+        }else{
+            //don't recharge, call deplete method here
+        }
+    }
+
+    public void AmmoGaugeDeplete(){
+        //call in ammo recharge method, deplete slider by 33%
+    }*/
 }

@@ -8,10 +8,12 @@ public class DashToPoint : MonoBehaviour
     public Rigidbody2D rb;
     public float dashSpeed = 2000;
     Vector2 lastClickedPos;
+    Vector3 relLastClickedPos;
     public bool moving;
     public bool closeToPos;
     public float maxDistance = 5;
     public Vector2 position;
+    public Vector3 targetPos;
     public PlayerMovement playerMovementScript;
 
     public void Start(){
@@ -26,7 +28,19 @@ public class DashToPoint : MonoBehaviour
             playerMovementScript.isMovementEnabledDash = false;
             rb.velocity = Vector2.zero;
             lastClickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log(lastClickedPos);
+            //lastClickedPos.z = 0;
+            //relLastClickedPos = transform.position - lastClickedPos;/*transform.InverseTransformPoint(lastClickedPos);*/
+            //relLastClickedPos.z = 0;
+            //Debug.Log("relLastClickedPos:" + relLastClickedPos);
+            //float angle = Vector3.Angle(Vector3.right, relLastClickedPos);
+            //float angle = Mathf.Atan2(relLastClickedPos.x, relLastClickedPos.y) * Mathf.Rad2Deg;
+            //Debug.Log("angle: " + angle);
+            //Vector3 relativeTargetPos = new Vector3(maxDistance*Mathf.Cos(angle), maxDistance*Mathf.Sin(angle), 0);
+            //targetPos = relativeTargetPos + transform.position; /*+ transform.position;*/
+            //Debug.Log("player position: " + transform.position);
+            //Debug.Log("lastClickedPos: " + lastClickedPos);
+            //Debug.Log("targetPos: " + targetPos);
+            targetPos = lastClickedPos;
             moving = true;
         }
         //Vector2 difference = lastClickedPos - (Vector2)transform.position;
@@ -35,7 +49,7 @@ public class DashToPoint : MonoBehaviour
             GetComponent<PlayerMovement>().currentDashCooldown = 0;
             GetComponent<Rigidbody2D>().gravityScale = 0;
             float step =  0.017f + (dashSpeed * Time.deltaTime);
-            transform.position = Vector2.MoveTowards(transform.position, lastClickedPos, step);
+            transform.position = Vector2.MoveTowards(transform.position, targetPos, step);
             closeToPos = false;
         }else{
             moving = false;
