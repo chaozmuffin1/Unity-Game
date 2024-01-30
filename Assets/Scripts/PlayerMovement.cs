@@ -50,6 +50,8 @@ public class PlayerMovement : MonoBehaviour{
     //physics material that has friction
     [SerializeField] private PhysicsMaterial2D defaultMaterial;
 
+    public bool dashUsed = false;
+
     public static PlayerMovement instance;
 
     public void Awake(){

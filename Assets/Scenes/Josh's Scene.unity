@@ -2280,6 +2280,7 @@ MonoBehaviour:
   isMovementEnabledDash: 1
   material: {fileID: 6200000, guid: 02a6e7f928908d245b22807e97f9f618, type: 2}
   defaultMaterial: {fileID: 6200000, guid: 30eebd381b57f7a43a246e6960569d72, type: 2}
+  dashUsed: 0
 --- !u!212 &619277991
 SpriteRenderer:
   m_ObjectHideFlags: 0
