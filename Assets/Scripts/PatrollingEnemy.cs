@@ -24,6 +24,7 @@ public class PatrollingEnemy : MonoBehaviour
     public PlayerMovement playerMovementScript;
     [SerializeField] private GameObject canvas;
     [SerializeField] private GameObject colliders;
+    public EnemyHealth healthScript;
     
 
     void Start(){
@@ -35,29 +36,35 @@ public class PatrollingEnemy : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         playerMovementScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-
     }
 
     private void FixedUpdate(){
-        if (colliders != null){
-            float distToPlayer = Vector2.Distance(transform.position, player.position);
-            if (distToPlayer < agroRange){
-                //chase player
-                ChasePlayer();
-            }else{
-                //patrol
-                float vX = patrolSpeed;
-                if (facingDirection == LEFT){
-                vX = -patrolSpeed;
-                }
-                rb.velocity = new Vector2(vX, rb.velocity.y);
-                if(IsHittingWall() || IsNearEdge()){
+        if (healthScript.isKnockbackCooldown == false){
+            if (colliders != null){
+                float distToPlayer = Vector2.Distance(transform.position, player.position);
+                if (distToPlayer < agroRange && playerObject.transform.position.y >= transform.position.y){
+                    //chase player
+                    ChasePlayer();
+                }else{
+                    //patrol
+                    float vX = patrolSpeed;
                     if (facingDirection == LEFT){
-                        ChangeFacingDirection(RIGHT);
-                    }else{
-                        ChangeFacingDirection(LEFT);
+                    vX = -patrolSpeed;
+                    }
+                    rb.velocity = new Vector2(vX, rb.velocity.y);
+                    if(IsHittingWall() || IsNearEdge()){
+                        if (facingDirection == LEFT){
+                            ChangeFacingDirection(RIGHT);
+                        }else{
+                            ChangeFacingDirection(LEFT);
+                        }
                     }
                 }
+            }
+            }else{
+                healthScript.knockbackCooldownTimer -= Time.deltaTime;
+                if (healthScript.knockbackCooldownTimer <= 0f){
+                healthScript.isKnockbackCooldown = false;
             }
         }
     }
@@ -85,11 +92,9 @@ public class PatrollingEnemy : MonoBehaviour
         }else{
             newScale.x = baseScale.x;
         }
-        //canvas.transform.SetParent(null, false);
         if (colliders != null){
             colliders.transform.localScale = newScale;
         }
-        //canvas.transform.SetParent(transform, false);
         facingDirection = newDirection;
     }
 

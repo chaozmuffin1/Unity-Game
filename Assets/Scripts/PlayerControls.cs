@@ -229,6 +229,34 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Air"",
+            ""id"": ""b2497908-c402-4833-8101-8c7041d414e2"",
+            ""actions"": [
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""c12bded8-bad0-4359-ae47-fb6816dbc609"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""84c2e9cb-3dae-4a13-8cd6-cd400f2d700d"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -246,6 +274,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         // Dead
         m_Dead = asset.FindActionMap("Dead", throwIfNotFound: true);
         m_Dead_Newaction = m_Dead.FindAction("New action", throwIfNotFound: true);
+        // Air
+        m_Air = asset.FindActionMap("Air", throwIfNotFound: true);
+        m_Air_Dash = m_Air.FindAction("Dash", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -423,6 +454,39 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         }
     }
     public DeadActions @Dead => new DeadActions(this);
+
+    // Air
+    private readonly InputActionMap m_Air;
+    private IAirActions m_AirActionsCallbackInterface;
+    private readonly InputAction m_Air_Dash;
+    public struct AirActions
+    {
+        private @PlayerControls m_Wrapper;
+        public AirActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Dash => m_Wrapper.m_Air_Dash;
+        public InputActionMap Get() { return m_Wrapper.m_Air; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AirActions set) { return set.Get(); }
+        public void SetCallbacks(IAirActions instance)
+        {
+            if (m_Wrapper.m_AirActionsCallbackInterface != null)
+            {
+                @Dash.started -= m_Wrapper.m_AirActionsCallbackInterface.OnDash;
+                @Dash.performed -= m_Wrapper.m_AirActionsCallbackInterface.OnDash;
+                @Dash.canceled -= m_Wrapper.m_AirActionsCallbackInterface.OnDash;
+            }
+            m_Wrapper.m_AirActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
+            }
+        }
+    }
+    public AirActions @Air => new AirActions(this);
     public interface ILandActions
     {
         void OnJump(InputAction.CallbackContext context);
@@ -437,5 +501,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     public interface IDeadActions
     {
         void OnNewaction(InputAction.CallbackContext context);
+    }
+    public interface IAirActions
+    {
+        void OnDash(InputAction.CallbackContext context);
     }
 }

@@ -207,6 +207,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Air",
+            "id": "b2497908-c402-4833-8101-8c7041d414e2",
+            "actions": [
+                {
+                    "name": "Dash",
+                    "type": "PassThrough",
+                    "id": "c12bded8-bad0-4359-ae47-fb6816dbc609",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "84c2e9cb-3dae-4a13-8cd6-cd400f2d700d",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
