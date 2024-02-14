@@ -14,6 +14,11 @@ public class EnemyHealth : MonoBehaviour
     public PlayerMovement playerMovementScript;
     public Animator anim;
     [SerializeField] private GameObject patrollingEnemy;
+    [SerializeField] private float knockbackForce;
+
+    public bool isKnockbackCooldown = false;
+    public float knockbackCooldownTimer = 0f;
+    [SerializeField] private float knockbackCooldown = 1f;
 
     void Start(){
         currentHealth = maxHealth;
@@ -45,7 +50,17 @@ public class EnemyHealth : MonoBehaviour
         {
             anim.SetTrigger("hit"); // Play hit animation
 
+            Vector2 knockbackDirection = (playerObject.transform.position - transform.position).normalized; // Calculate direction from enemy to player
             Rigidbody2D playerRigidbody = playerObject.GetComponent<Rigidbody2D>(); // Apply force to player
+            playerRigidbody.AddForce(knockbackDirection * knockbackForce); // Apply force to player
+
+            Rigidbody2D enemyrb = patrollingEnemy.GetComponent<Rigidbody2D>();
+            Vector2 knockbackDirectionEnemy = (transform.position - playerObject.transform.position).normalized;
+            enemyrb.AddForce(knockbackDirectionEnemy * (knockbackForce/5));
+
+            isKnockbackCooldown = true;
+            knockbackCooldownTimer = knockbackCooldown;
+
 
             //Disable player's movement for a second
             PlayerMovement.instance.DisableMovementForCooldown();

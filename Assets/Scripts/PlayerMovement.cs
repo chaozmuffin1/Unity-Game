@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour{
     //enables or disables other movement while dash is occuring
     public bool isMovementEnabledDash = true;
     //amount of seconds player is on cooldown for
-    private float movementCooldown = 1f;
+    private float movementCooldown = 0.4f;
     //timer that will count until it equals the movement cooldown
     private float movementCooldownTimer = 0f;
     //reference to the player's input component
@@ -50,9 +50,12 @@ public class PlayerMovement : MonoBehaviour{
     //physics material that has friction
     [SerializeField] private PhysicsMaterial2D defaultMaterial;
 
-    public bool dashUsed = false;
+    public bool oldIsGrounded;
+    public bool canDash;
 
     public static PlayerMovement instance;
+
+    [SerializeField] private ParticleSystem trail;
 
     public void Awake(){
         playerControls = new PlayerControls();
@@ -69,6 +72,8 @@ public class PlayerMovement : MonoBehaviour{
     }
 
     public void Start(){
+        var emission = trail.emission;
+        emission.enabled = false;
         //gets the player's box collider
         coll = GetComponent<BoxCollider2D>();
         //gets the player's animation component
@@ -82,21 +87,26 @@ public class PlayerMovement : MonoBehaviour{
     }
 
     public void Update(){
-        if (isGrounded() == false && dashReady == true){
+        if (isGrounded() == true){
+            canDash = true;
+            dashScript.canDash = true;
+        }else{
+            if (isGrounded() == false && dashScript.canDash == true){
+                canDash = true;
+            }else{
+                canDash = false;
+            }
+        }
+        if (canDash == true && isGrounded() == false && dashScript.enabled == false){
             dashScript.TurnOn();
         }else{
-            dashScript.TurnOff();
+            if ((canDash == false && dashScript.enabled == true) || isGrounded() == true){
+                dashScript.TurnOff();
+            }
         }
-        if (currentDashCooldown >= dashCooldown){
-            dashReady = true;
-        }else{
-            dashReady = false;
-            currentDashCooldown += Time.deltaTime;
-            currentDashCooldown = Mathf.Clamp(currentDashCooldown, 0.0f, dashCooldown);
-        }
+        
         Flip();
         if (isMovementEnabled && isMovementEnabledDash){
-        
         //layermask component for the boxcast so it only detects collisions with ground
         LayerMask mask = LayerMask.GetMask("Ground");
 
@@ -135,14 +145,14 @@ public class PlayerMovement : MonoBehaviour{
                 jumping = false;
             }
         }
-        if (playerControls.Land.Right.IsPressed()){
+        if (playerControls.Land.Right.IsPressed() && playerControls.Land.Left.IsPressed() == false){
             if (playerControls.Land.Sprint.IsPressed()){
                 rb.velocity = new Vector2(sprintSpeed,rb.velocity.y);
             }else{
                 rb.velocity = new Vector2(moveSpeed,rb.velocity.y);
             }
         }else{
-            if (playerControls.Land.Left.IsPressed()){
+            if (playerControls.Land.Left.IsPressed() && playerControls.Land.Right.IsPressed() == false){
                 if (playerControls.Land.Sprint.IsPressed()){
                     rb.velocity = new Vector2(-sprintSpeed,rb.velocity.y);
                 }else{
@@ -161,6 +171,7 @@ public class PlayerMovement : MonoBehaviour{
             {
                 isMovementEnabled = true;
             }
+            trail.Play();
         }
     }
     
@@ -223,11 +234,16 @@ public class PlayerMovement : MonoBehaviour{
     }
 
     private void Flip(){
-        // Flip the player and it's children objects
-        if (transform.localEulerAngles.y != 180 && rb.velocity.x<-0.5)
+        if (isMovementEnabled){
+        // Flip the player and its children objects
+        if (transform.localEulerAngles.y != 180 && rb.velocity.x<-0.5){
             transform.Rotate(0f, 180f, 0f);
-        else if(transform.localEulerAngles.y != 0 && rb.velocity.x>0.5)
-            transform.Rotate(0f, -180f, 0f);
+        }else{
+            if (transform.localEulerAngles.y != 0 && rb.velocity.x>0.5){
+                transform.Rotate(0f, -180f, 0f);
+            }
+        }
+    }
     }
 }
     

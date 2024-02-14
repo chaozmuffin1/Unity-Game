@@ -13,7 +13,9 @@ public class Crosshair : MonoBehaviour
     }
 
     public void OnEnable(){
-        Cursor.SetCursor(cursorArrow, Vector2.zero, CursorMode.ForceSoftware);
+        //Cursor.SetCursor(cursorArrow, Vector2.zero, CursorMode.ForceSoftware);
+        Vector2 hotSpot = new Vector2(cursorArrow.width / 2f, cursorArrow.height / 2f);
+        Cursor.SetCursor(cursorArrow, hotSpot, CursorMode.Auto);
     }
 
     public void OnDisable(){
