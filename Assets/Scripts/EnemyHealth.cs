@@ -65,7 +65,6 @@ public class EnemyHealth : MonoBehaviour
             //Disable player's movement for a second
             PlayerMovement.instance.DisableMovementForCooldown();
 
-            Debug.Log("collision detected");
             playerScript.TakeDamage(damageAmount);
         }
     }

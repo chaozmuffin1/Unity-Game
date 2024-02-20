@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     //reference to the player's sprite renderer
     public SpriteRenderer playerSpriteRenderer; 
     //the death screen game object
-    [SerializeField] private GameObject deathScreen = null;
+    //[SerializeField] private GameObject deathScreen = null;
     //the visible health bar game object (for the player)
     [SerializeField] private GameObject healthCanvas = null;
     //the player game object
@@ -24,10 +24,13 @@ public class Player : MonoBehaviour
 
     public WpnCrshrEnableDisable weaponScript;
 
+    void Awake(){
+        currentHealth = maxHealth;
+    }
     void Start()
     {
         //sets the deathScreen game object to false
-        deathScreen.SetActive(false);
+        //deathScreen.SetActive(false);
         //sets current health to 100
         currentHealth = maxHealth;
         //sets health on the health bar to 100 (function is in the HealthBar script)
@@ -40,13 +43,13 @@ public class Player : MonoBehaviour
         //if the player's health decreases to zero
         if (currentHealth <= 0){
             //makes the death screen visible
-            deathScreen.SetActive(true);
+            //deathScreen.SetActive(true);
             //makes the health bar invisible
             healthCanvas.SetActive(false);
             //sets the player game object to inactive
             player.SetActive(false);
             //sets the enemy game object to inactive
-            enemy.SetActive(false);
+            //enemy.SetActive(false);
             weaponScript.Disable();
         }
 
@@ -60,9 +63,11 @@ public class Player : MonoBehaviour
     //this function is called in the Enemy script
     public void TakeDamage(int damage)
     {
+        if (currentHealth > 0){
         //subtracts damage from current health
         currentHealth -= damage;
         //sets the displayed health on the health bar to the new health value
         healthBar.SetHealth(currentHealth);
+        }
     }
 }

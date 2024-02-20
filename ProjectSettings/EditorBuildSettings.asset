@@ -11,11 +11,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Control Menu.unity
     guid: b33b8158ae00121468de205d7210bf0c
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Josh's Scene.unity
     guid: d409aa7b94263494680cf1ed0a6f9c45
+  - enabled: 1
+    path: Assets/Scenes/DeathScreen.unity
+    guid: 73c1f0253aeec414eac9d526707ac70d
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 02b0dd0a8456fb7408e5b5778bc6d86f, type: 2}

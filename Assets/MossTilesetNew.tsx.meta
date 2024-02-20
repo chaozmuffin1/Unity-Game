@@ -1,0 +1,31 @@
+fileFormatVersion: 2
+guid: 5a4e232330d15c24e8c4488149f62328
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: cc34d0f3dc257a442819830b408c5322, type: 3}
+  missingFiles: []
+  errors:
+  - Could not generate asset path for '../GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
+  - 'Missing template file: ../GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
+  - Could not generate asset path for '../GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
+  - 'Missing template file: ../GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
+  - Could not generate asset path for '../GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
+  - 'Missing template file: ../GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
+  - Could not generate asset path for '../GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
+  - 'Missing template file: ../GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
+  warnings: []
+  missingSortingLayers: []
+  missingLayers: []
+  missingTags: []
+  importerVersion: 14
+  pixelsPerUnit: 256
+  edgesPerEllipse: 32
+  numberOfObjectsImported: 398
+  useSpriteAtlas: 1
+  atlasWidth: 2048
+  atlasHeight: 2048
