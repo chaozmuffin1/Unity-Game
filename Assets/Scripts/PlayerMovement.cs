@@ -219,6 +219,7 @@ public class PlayerMovement : MonoBehaviour{
     }
     
     public bool isGrounded(){
+        Debug.Log(Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, jumpableGround));
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
     }
     public void DisableMovementForCooldown()
