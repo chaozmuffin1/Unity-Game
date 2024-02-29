@@ -20,12 +20,15 @@ public class EnemyHealth : MonoBehaviour
     public float knockbackCooldownTimer = 0f;
     [SerializeField] private float knockbackCooldown = 1f;
 
+    public Weapon weaponScript;
+
     void Start(){
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         playerMovementScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         anim = player.GetComponent<Animator>();
+        weaponScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Weapon>();
     }
 
     public void TakeDamage(int damage)
@@ -35,6 +38,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            weaponScript.Reload();
             Die();
         }
     }

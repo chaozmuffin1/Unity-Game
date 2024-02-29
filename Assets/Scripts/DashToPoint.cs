@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DashToPoint : MonoBehaviour
 {
+    public Animator animator;
     //gets the player's rigid body
     public Rigidbody2D rb;
     //a multiplier for the dash speed used in MoveTowards method
@@ -37,6 +38,7 @@ public class DashToPoint : MonoBehaviour
         DetectChangeInCurrentlyDashing();
         //if the dash key is pressed and currentlyDashing is false (meaning the player isn't currently dashing)
         if (Input.GetKeyDown("c") && currentlyDashing == false && canDash == true){
+            animator.SetTrigger("dash");
             //gets the player's current position before dashing
             GetInitialPosition();
             //disables all other movement in the player movement component of the player besides the dash
@@ -63,6 +65,7 @@ public class DashToPoint : MonoBehaviour
             //player isn't close to target pos
             closeToPos = false;
         }else{
+            animator.ResetTrigger("dash");
             emission.enabled = false;
             //player is no longer dashing
             oldCurrentlyDashing = currentlyDashing;

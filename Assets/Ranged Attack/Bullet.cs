@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
 
     public Vector3 oldPos;
     public float totalDistance = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +31,7 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D hitInfo){
         EnemyHealth enemy = hitInfo.GetComponent<EnemyHealth>();
-        TilemapCollider2D tileCollider = hitInfo.GetComponent<TilemapCollider2D>();
+        PolygonCollider2D tileCollider = hitInfo.GetComponent<PolygonCollider2D>();
         if (enemy != null){
             enemy.TakeDamage(damage);
             Destroy(gameObject);
@@ -38,6 +39,5 @@ public class Bullet : MonoBehaviour
         if (tileCollider != null){
             Destroy(gameObject);
         }
-        //Destroy(gameObject);
     }
 }

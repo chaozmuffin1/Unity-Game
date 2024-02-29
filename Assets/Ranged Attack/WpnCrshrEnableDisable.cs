@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class WpnCrshrEnableDisable : MonoBehaviour
 {
@@ -9,6 +11,10 @@ public class WpnCrshrEnableDisable : MonoBehaviour
     public PlayerCombat meleeScript;
     bool enOrDis;
     private PlayerControls playerControls;
+
+    public Image ammoCircle;
+    public Image ammoBackground;
+    public TMP_Text ammoCount;
 
     public void Awake(){
         playerControls = new PlayerControls();
@@ -31,6 +37,10 @@ public class WpnCrshrEnableDisable : MonoBehaviour
         meleeScript.enabled = true;
         weaponScript.enabled = false;
         crosshairScript.enabled = false;
+        ammoCircle.enabled = false;
+        ammoCount.enabled = false;
+        ammoBackground.enabled = false;
+
     }
 
     // Update is called once per frame
@@ -40,6 +50,9 @@ public class WpnCrshrEnableDisable : MonoBehaviour
             weaponScript.enabled = true;
             crosshairScript.enabled = true;
             crosshairScript.OnEnable();
+            ammoCircle.enabled = true;
+            ammoCount.enabled = true;
+            ammoBackground.enabled = true;
             enOrDis = true;
             meleeScript.enabled = false;
         } 
@@ -48,6 +61,9 @@ public class WpnCrshrEnableDisable : MonoBehaviour
             crosshairScript.OnDisable();
             meleeScript.enabled = true;
             crosshairScript.enabled = false;
+            ammoCircle.enabled = false;
+            ammoBackground.enabled = false;
+            ammoCount.enabled = false;
             enOrDis = false;
         }
     }
@@ -56,5 +72,8 @@ public class WpnCrshrEnableDisable : MonoBehaviour
         weaponScript.enabled = false;
         crosshairScript.OnDisable();
         crosshairScript.enabled = false;
+        ammoCircle.enabled = false;
+        ammoBackground.enabled = false;
+        ammoCount.enabled = false;
     }
 }

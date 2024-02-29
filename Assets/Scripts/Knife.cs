@@ -15,6 +15,7 @@ public class Knife : MonoBehaviour
     public float flightSpeed = 10;
     public Rigidbody2D rb;
     public bool val = false;
+    [SerializeField] private Behaviour playerHitbox;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +47,7 @@ public class Knife : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        playerHitbox.enabled = true;
         if (collision.gameObject == playerObject) // Check if the collision is made with player
         {
             anim.SetTrigger("hit"); // Play hit animation
