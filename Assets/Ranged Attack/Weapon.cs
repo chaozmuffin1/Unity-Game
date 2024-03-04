@@ -21,6 +21,8 @@ public class Weapon : MonoBehaviour
 
     public TMP_Text ammoCount;
 
+    [SerializeField] private AudioSource shootSound;
+
     // Start is called before the first frame update
     public void Awake(){
         playerControls = new PlayerControls();
@@ -49,6 +51,8 @@ public class Weapon : MonoBehaviour
         firePoint.rotation = Quaternion.Euler(0,0,lookAngle);
         
         if (playerControls.Land.Fire.WasPressedThisFrame() && currentAmmo > 0){
+            shootSound.time = 0.01f;
+            shootSound.Play();
             Shoot();
             currentAmmo -= 1;
             ammoCircle.fillAmount = ammoCircle.fillAmount - fraction;

@@ -10,14 +10,14 @@ ScriptedImporter:
   script: {fileID: 11500000, guid: cc34d0f3dc257a442819830b408c5322, type: 3}
   missingFiles: []
   errors:
-  - Could not generate asset path for '../GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
-  - 'Missing template file: ../GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
-  - Could not generate asset path for '../GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
-  - 'Missing template file: ../GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
-  - Could not generate asset path for '../GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
-  - 'Missing template file: ../GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
-  - Could not generate asset path for '../GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
-  - 'Missing template file: ../GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
+  - Could not generate asset path for '../OneDrive/Unity-Game/GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
+  - 'Missing template file: ../OneDrive/Unity-Game/GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
+  - Could not generate asset path for '../OneDrive/Unity-Game/GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
+  - 'Missing template file: ../OneDrive/Unity-Game/GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
+  - Could not generate asset path for '../OneDrive/Unity-Game/GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
+  - 'Missing template file: ../OneDrive/Unity-Game/GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
+  - Could not generate asset path for '../OneDrive/Unity-Game/GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
+  - 'Missing template file: ../OneDrive/Unity-Game/GameTiles/Tiled/Tilesets/corner_wall_top_left.tx'
   warnings: []
   missingSortingLayers: []
   missingLayers: []

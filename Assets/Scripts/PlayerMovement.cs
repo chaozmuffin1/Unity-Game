@@ -57,6 +57,9 @@ public class PlayerMovement : MonoBehaviour{
 
     [SerializeField] private ParticleSystem trail;
 
+    [SerializeField] private AudioSource runSound;
+    [SerializeField] private AudioSource walkSound;
+
     public void Awake(){
         playerControls = new PlayerControls();
     }
@@ -147,19 +150,37 @@ public class PlayerMovement : MonoBehaviour{
         }
         if (playerControls.Land.Right.IsPressed() && playerControls.Land.Left.IsPressed() == false){
             if (playerControls.Land.Sprint.IsPressed()){
+                if (runSound.isPlaying == false && isGrounded()){
+                runSound.Play();
+                walkSound.Pause();
+                }
                 rb.velocity = new Vector2(sprintSpeed,rb.velocity.y);
             }else{
+                if (walkSound.isPlaying == false && isGrounded()){
+                    runSound.Pause();
+                    walkSound.Play();
+                }
                 rb.velocity = new Vector2(moveSpeed,rb.velocity.y);
             }
         }else{
             if (playerControls.Land.Left.IsPressed() && playerControls.Land.Right.IsPressed() == false){
                 if (playerControls.Land.Sprint.IsPressed()){
                     rb.velocity = new Vector2(-sprintSpeed,rb.velocity.y);
+                    if (runSound.isPlaying == false && isGrounded()){
+                        walkSound.Pause();
+                        runSound.Play();
+                    }
                 }else{
+                    if (walkSound.isPlaying == false && isGrounded()){
+                        runSound.Pause();
+                        walkSound.Play();
+                    }
                     rb.velocity = new Vector2(-moveSpeed,rb.velocity.y);
                 }
             }else{
                 if (isGrounded()){
+                    runSound.Pause();
+                    walkSound.Pause();
                     rb.velocity = new Vector2(0, rb.velocity.y);
                 }
             }
@@ -219,7 +240,6 @@ public class PlayerMovement : MonoBehaviour{
     }
     
     public bool isGrounded(){
-        Debug.Log(Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, jumpableGround));
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
     }
     public void DisableMovementForCooldown()

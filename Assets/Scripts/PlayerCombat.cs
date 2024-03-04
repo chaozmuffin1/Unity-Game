@@ -21,6 +21,7 @@ public class PlayerCombat : MonoBehaviour
     public float cooldown = 1.5f;
     //the time that has passed since the player last attacked
     public float cooldownCurrent = 0.0f;
+    [SerializeField] private AudioSource attackAudio;
 
     private PlayerControls playerControls;
 
@@ -61,12 +62,14 @@ public class PlayerCombat : MonoBehaviour
         //function that is used for every attack after the first attack
         if (playerControls.Land.MeleeAttack.WasPressedThisFrame() && attackReady && firstAttack == false)
         {
+            attackAudio.Play();
             Attack();
             //resets the time since the last attack to 0 so the player needs to wait again
             cooldownCurrent = 0.0f;
         }
         //seperate function for the first attack so the player doesn't have to wait cooldownCurrent to be greater than cooldown
         if (playerControls.Land.MeleeAttack.WasPressedThisFrame() && firstAttack){
+            attackAudio.Play();
             Attack();
             //sets firstAttack to false so this function isn't called again
             firstAttack = false;

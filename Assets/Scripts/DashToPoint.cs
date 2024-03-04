@@ -38,7 +38,7 @@ public class DashToPoint : MonoBehaviour
         DetectChangeInCurrentlyDashing();
         //if the dash key is pressed and currentlyDashing is false (meaning the player isn't currently dashing)
         if (Input.GetKeyDown("c") && currentlyDashing == false && canDash == true){
-            animator.SetTrigger("dash");
+            animator.SetBool("dashing", true);
             //gets the player's current position before dashing
             GetInitialPosition();
             //disables all other movement in the player movement component of the player besides the dash
@@ -49,6 +49,7 @@ public class DashToPoint : MonoBehaviour
             targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             //sets currentlyDashing to true
             currentlyDashing = true;
+            canDash = false;
             }
         //if player is currently dashing, in other words if there is a target position, and if the player isn't grounded, then the dash function continues
         //player only continues dashing if the distance between targetPos and the player's initial position is greater than 2 and less than 7.5 (used for closeToPos)
@@ -65,8 +66,8 @@ public class DashToPoint : MonoBehaviour
             //player isn't close to target pos
             closeToPos = false;
         }else{
-            animator.ResetTrigger("dash");
             emission.enabled = false;
+            animator.SetBool("dashing", false);
             //player is no longer dashing
             oldCurrentlyDashing = currentlyDashing;
             currentlyDashing = false;
@@ -112,6 +113,7 @@ public class DashToPoint : MonoBehaviour
         targetPos = Vector2.zero;
         //enables movement again
         playerMovementScript.EnableMovementAfterDash();
+        //animator.SetBool("dashing", false);
         //turns off this script
         this.enabled = false;
         }
