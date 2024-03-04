@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.seanba.super-tiled2unity": "file:C:/Users/josht/Downloads/super-tiled2unity.v2.1.1",
+    "com.seanba.super-tiled2unity": "file:C:/Users/manat/Downloads/SuperTiled2Unity-master/SuperTiled2Unity/Packages/com.seanba.super-tiled2unity",
     "com.unity.cinemachine": "2.8.9",
     "com.unity.collab-proxy": "1.17.1",
     "com.unity.feature.2d": "1.0.0",

@@ -9,6 +9,7 @@ public class Knife : MonoBehaviour
     [SerializeField] private GameObject knifeObject;
     [SerializeField] private GameObject playerObject;
     private int damageAmount = 20;
+    public float rotation;
     public Player playerScript;
     public PlayerMovement playerMovementScript;
     public Animator anim;
@@ -23,16 +24,24 @@ public class Knife : MonoBehaviour
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         playerMovementScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         anim = player.GetComponent<Animator>();
+
+        // Detect what direction the knife is facing by getting current rotation of knife
+        rotation = transform.eulerAngles.z;
     }
 
     void Update(){
+        
         if (val == false){
             DetectPlayer();
         }
     }
 
     private void MoveInDirection(){
-        rb.velocity = new Vector2(-flightSpeed, rb.velocity.y);
+        // Convert the rotation of knife to a direction vector
+        Vector2 direction = new Vector2(Mathf.Cos(rotation * Mathf.Deg2Rad),Mathf.Sin(rotation*Mathf.Deg2Rad));
+
+        // Move the knife in determined direction
+        rb.velocity = -direction * flightSpeed;
     }
 
     private bool DetectPlayer(){
