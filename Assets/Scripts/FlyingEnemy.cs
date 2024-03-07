@@ -21,6 +21,8 @@ public class FlyingEnemy : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float patrolSpeed;
     private Vector3 baseScale;
+    [SerializeField] private AudioSource shootSound;
+    [SerializeField] private GameObject colliders;
 
     void Start(){
         rb = GetComponent<Rigidbody2D>();
@@ -35,6 +37,8 @@ public class FlyingEnemy : MonoBehaviour
         if (isTurret == true){
             TurretBehavior();
             if (DetectPlayer() == true && currentCooldown >= firesPerSecond){
+                shootSound.time = 0.01f;
+                shootSound.Play();
                 Instantiate(laserPrefab, firePoint.position, firePoint.rotation);
                 currentCooldown = 0.0f;
             }else{
@@ -76,6 +80,6 @@ public class FlyingEnemy : MonoBehaviour
         }else{
             newScale.x = -baseScale.x;
         }
-        transform.localScale = newScale;
+        colliders.transform.localScale = newScale;
     }
 }
