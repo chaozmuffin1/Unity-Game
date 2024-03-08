@@ -8,13 +8,14 @@ public class Laser : MonoBehaviour
     public float speed = 20f;
     public int damage = 5;
     public Rigidbody2D rb;
-
+    private Animator anim;
     public Vector3 oldPos;
     public float totalDistance = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        anim = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
         rb.velocity = transform.right * speed;
         oldPos = transform.position;
     }
@@ -37,6 +38,7 @@ public class Laser : MonoBehaviour
         }
         if (player != null){
             player.TakeDamage(damage);
+            anim.SetTrigger("hit");
             Destroy(gameObject);
         }
     }

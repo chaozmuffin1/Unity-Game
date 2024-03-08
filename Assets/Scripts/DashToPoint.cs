@@ -37,7 +37,7 @@ public class DashToPoint : MonoBehaviour
         var emission = trail.emission;
         DetectChangeInCurrentlyDashing();
         //if the dash key is pressed and currentlyDashing is false (meaning the player isn't currently dashing)
-        if (Input.GetKeyDown("c") && currentlyDashing == false && canDash == true){
+        if ((Input.GetKeyDown("c") || Input.GetMouseButtonDown(1)) && currentlyDashing == false && canDash == true){
             animator.SetBool("dashing", true);
             //gets the player's current position before dashing
             GetInitialPosition();
